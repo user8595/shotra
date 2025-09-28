@@ -18,6 +18,8 @@ isUseBomb = false
 
 -- game
 isShoot = false
+--TODO: Add auto fire toggle
+isAutoFire = false
 isBoss = false
 
 -- player
@@ -37,11 +39,7 @@ player = {
 }
 
 -- left side
-pBlList_1 = {}
--- center
-pBlList_2 = {}
--- right side
-pBlList_3 = {}
+pBlList_1, pBlList_2, pBlList_3 = {}, {}, {}
 
 -- game display
 gameWorld = {
@@ -77,8 +75,8 @@ keys = {
     left = "left",
     right = "right",
     shoot = "z",
-    bomb = "x",
-    slow = "c"
+    slow = "x",
+    bomb = "c",
 }
 
 -- colours

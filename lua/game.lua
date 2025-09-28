@@ -7,16 +7,21 @@ function gameDisplay()
     love.graphics.setColor(1, 1, 1)
     love.graphics.rectangle("fill", player.x + 10, player.y + 10, player.hW, player.hH)
     -- love.graphics.print(player.cDown, 40, 120)
+
     if isShoot then
         -- shoots bullets with cooldown
         if player.cDown > 0.07 then
-            table.insert(pBlList_1, pBl:new(player.x, player.y - 15, 5, 10))
-            table.insert(pBlList_2, pBl:new(player.x + 10, player.y - 25, 5, 10))
-            table.insert(pBlList_3, pBl:new(player.x + 20, player.y - 15, 5, 10))
-            print(pBlList_1)
-            print(pBlList_2)
-            print(pBlList_3)
+            if stats.pLevel == 1 then
+                table.insert(pBlList_1, pBl:new(player.x, player.y - 15, 5, 10, 700))
+                table.insert(pBlList_2, pBl:new(player.x + 10, player.y - 25, 5, 10, 700))
+                table.insert(pBlList_3, pBl:new(player.x + 20, player.y - 15, 5, 10, 700))
+            elseif stats.pLevel == 2 then
+            elseif stats.pLevel == 3 then
+            end
             player.cDown = 0
+            -- print(pBlList_1)
+            -- print(pBlList_2)
+            -- print(pBlList_3)
         end
     else
     end
@@ -71,23 +76,38 @@ function playerFunc(dt)
     else
         isShoot = false
     end
-    
+
+    --TODO: FInish bomb functionality
+    if love.keyboard.isDown(keys.bomb) then
+        
+    end
+
+    if love.keyboard.isDown(keys.slow) then
+        player.vx, player.vy = 110, 110
+    else
+        player.vx, player.vy = 200, 200
+    end
+
     if isShoot then
         player.cDown = player.cDown + dt
     end
     
+    -- left side
     for i, v in ipairs(pBlList_1) do
         v:move(dt)
     end
 
+    -- center
     for i, v in ipairs(pBlList_2) do
         v:move(dt)
     end
 
+    -- right side
     for i, v in ipairs(pBlList_3) do
         v:move(dt)
     end
-    -- collision
+
+    -- screen game collision
     if player.x < gameWorld.x then
         player.x = gameWorld.x
     end

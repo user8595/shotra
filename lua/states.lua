@@ -6,10 +6,6 @@ function states()
     else
     end
     
-    if isDebug then
-        debugMenu()
-    else
-    end
 end
 
 function keyFunc(key)
