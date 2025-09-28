@@ -22,13 +22,26 @@ isBoss = false
 
 -- player
 player = {
-    x = gWidth / 2 - 2.5,
+    x = gWidth / 2 - 12,
     y = gHeight - 60,
-    w = 5,
-    h = 5,
+    w = 24,
+    h = 24,
+
+    -- hitbox
+    hW = 5,
+    hH = 5,
+
     vx = 200,
     vy = 200,
+    cDown = 0,
 }
+
+-- left side
+pBlList_1 = {}
+-- center
+pBlList_2 = {}
+-- right side
+pBlList_3 = {}
 
 -- game display
 gameWorld = {
