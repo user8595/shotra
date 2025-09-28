@@ -1,14 +1,22 @@
-require("lua.ui")
-
 function states()
-    debugMenu()
+    if state == "game" then
+        hud()
+        screen()
+        gameDisplay()
+    else
+    end
+    
+    if isDebug then
+        debugMenu()
+    else
+    end
 end
 
 function keyFunc(key)
     if key == "escape" then
         love.event.quit(0)
     end
-
+    
     if key == "f11" then
         if love.window.getFullscreen() == false then
             love.window.setFullscreen(true)
@@ -16,8 +24,18 @@ function keyFunc(key)
             love.window.setFullscreen(false)
         end
     end
+    
+    if key == "f4" then
+        if isDebug == false then
+            isDebug = true
+        else
+            isDebug = false
+        end
+    end
 end
 
 function gameLoop(dt)
-    
+    if state == "game" and isPaused == false then
+        playerFunc(dt)
+    end
 end
