@@ -22,21 +22,21 @@ function pauseScreen()
     love.graphics.rectangle("fill", 0, 0, wWidth, wHeight)
 
     love.graphics.setColor(0.075, 0.075, 0.075)
-    love.graphics.rectangle("fill", gWidth / 2 - 70, gHeight / 2 - 50, 140, 120)
+    love.graphics.rectangle("fill", gWidth / 2 - 90, gHeight / 2 - 50, 180, 120)
 
     love.graphics.setColor(white)
 
-    love.graphics.draw(border[2], gWidth / 2 - 70, gHeight / 2 - 60, 0, 5, 5)
-    love.graphics.draw(border[2], gWidth / 2 + 70, gHeight / 2 - 60, 1.571, 5, 5)
-    love.graphics.draw(border[2], gWidth / 2 - 70, gHeight / 2 + 70, -1.571, 5, 5)
-    love.graphics.draw(border[2], gWidth / 2 + 70, gHeight / 2 + 70, 3.14, 5, 5)
+    love.graphics.draw(border[2], gWidth / 2 - 90, gHeight / 2 - 60, 0, 5, 5)
+    love.graphics.draw(border[2], gWidth / 2 + 90, gHeight / 2 - 60, 1.571, 5, 5)
+    love.graphics.draw(border[2], gWidth / 2 - 90, gHeight / 2 + 70, -1.571, 5, 5)
+    love.graphics.draw(border[2], gWidth / 2 + 90, gHeight / 2 + 70, 3.14, 5, 5)
     
-    love.graphics.draw(border[1], gWidth / 2 - 60, gHeight / 2 - 60, 0, 30, 5)
-    love.graphics.draw(border[1], gWidth / 2 - 70, gHeight / 2 + 60, -1.571, 28, 5)
-    love.graphics.draw(border[1], gWidth / 2 + 70, gHeight / 2 - 50, 1.571, 28, 5)
-    love.graphics.draw(border[1], gWidth / 2 + 60, gHeight / 2 + 70, 3.14, 30, 5)
+    love.graphics.draw(border[1], gWidth / 2 - 80, gHeight / 2 - 60, 0, 40, 5)
+    love.graphics.draw(border[1], gWidth / 2 - 90, gHeight / 2 + 60, -1.571, 28, 5)
+    love.graphics.draw(border[1], gWidth / 2 + 90, gHeight / 2 - 50, 1.571, 28, 5)
+    love.graphics.draw(border[1], gWidth / 2 + 80, gHeight / 2 + 70, 3.14, 40, 5)
     
-    love.graphics.printf({gray, "E", white, "x" .. stats.enemies, gray, " C", white, "x" .. stats.combo}, monogram, gWidth / 2 - 70, gHeight / 2 - 40, 140, "center")
+    love.graphics.printf({gray, "E", white, "x" .. stats.enemies,  gray, " MC", white, "x" .. stats.mCombo}, monogram, gWidth / 2 - 70, gHeight / 2 - 40, 140, "center")
     love.graphics.printf("RESUME", monogram, gWidth / 2 - 70, gHeight / 2 - 10, 140, "center")
     love.graphics.printf("RETRY", monogram, gWidth / 2 - 70, gHeight / 2 + 10, 140, "center")
     love.graphics.printf("QUIT", monogram, gWidth / 2 - 70, gHeight / 2 + 30, 140, "center")
@@ -89,6 +89,10 @@ end
 function continueKey(key)
     if key == keys.shoot and contTime < 9 or key == keys.slow and contTime < 9 or key == keys.bomb and contTime < 9 then
         contTime = contTime - 1
+    end
+
+    if key == "return" then
+        stats.continues = stats.continues + 1
     end
 end
 

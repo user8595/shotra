@@ -126,6 +126,10 @@ function statsFunc(dt)
         stats.hScore = stats.score
     end
 
+    if stats.combo > stats.mCombo then
+        stats.mCombo = stats.combo
+    end
+
     if stats.life < 0 then
         isFail = true
     else

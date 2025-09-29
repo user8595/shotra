@@ -67,6 +67,7 @@ stats = {
     life = 2,
     
     combo = 0,
+    mCombo = 0,
     enemies = 0,
     continues = 0,
 
