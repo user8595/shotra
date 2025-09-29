@@ -7,6 +7,7 @@ function borderS()
     love.graphics.rectangle("fill", gWidth - gWidth / 4, 0, gWidth / 4, gHeight)
 end
 
+local flick1 = 0
 function hud()
     love.graphics.setColor(white)
     love.graphics.print({gray, "HI-SCORE\n", white, string.format("%07d", stats.hScore)}, monogram, 20, 20)
@@ -15,6 +16,30 @@ function hud()
     love.graphics.print({gray, "LIVES\n", white, "x" .. stats.life}, monogram, 495, gHeight - 60)
     love.graphics.print({gray, "BOMB\n", white, "x" .. stats.bomb}, monogram, 495, gHeight - 100)
     love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
+    
+    if stats.combo > 3 then
+        love.graphics.setColor(white)
+        love.graphics.printf({gold, "COMBO!!\n", white, "x" .. math.floor(stats.combo)}, monogram, 0, 105, gWidth / 4 - 15, "right")
+        love.graphics.printf({gray, "max x" .. math.floor(stats.mCombo)}, picopixel, 0, 147, gWidth / 4 - 15, "right")
+    else
+        love.graphics.printf({gray, "max x" .. math.floor(stats.mCombo)}, picopixel, 0, 147, gWidth / 4 - 15, "right")
+    end
+end
+
+function comboHudAnim(dt)
+    if comboTime > 0 then
+        flick1 = flick1 + dt
+    else
+        flick1 = 0
+    end
+    
+    if flick1 < 0.05 then
+        gold = {0.65, 0.65, 0}
+    elseif flick1 < 0.1 then
+        gold = {1, 1, 0}
+    elseif flick1 > 0.15 then
+        flick1 = 0
+    end
 end
 
 function pauseScreen()

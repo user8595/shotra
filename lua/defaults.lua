@@ -28,6 +28,9 @@ isBoss = false
 isContinue = false
 isFail = false
 
+-- combo cooldown time
+comboTime = 0
+
 isTrnsition = false
 
 -- player
@@ -101,4 +104,5 @@ borderColour = {0, 0, 0}
 popupOverlay = {0, 0, 0, 0.65}
 white = {1, 1, 1, 1}
 gray = {0.5, 0.5, 0.5, 1}
+gold = {1, 1, 0, 1}
 goText = {1, 1, 1, 0}

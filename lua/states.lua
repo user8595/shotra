@@ -65,28 +65,3 @@ function keyFunc(key)
         isContinue = true
     end
 end
-
-function gameLoop(dt)
-    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
-        playerControl(dt)
-        statsFunc(dt)
-    end
-
-    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false then
-        playerFunc(dt)
-    else
-    end
-
-    if isPaused == false and isPauseDelay then
-        pauseAnim(dt)
-    end
-
-    if isContinue then
-        continueFunc(dt)
-    else
-    end
-
-    if isFail then
-        goFunc(dt)
-    end
-end
