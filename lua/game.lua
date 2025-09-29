@@ -160,23 +160,23 @@ function playerFail(dt)
     end
     
     -- player lost cooldown before respawn
-    if player.lostLifeCool < 1 and isLoseLife then
+    if player.lostLifeCool < 0.85 and isLoseLife then
         player.lostLifeCool = player.lostLifeCool + dt
     end
     
     -- cooldown runs quicker when lifes are empty
-    if player.lostLifeCool > 0.75 and isLoseLife and stats.life < 1 then
+    if player.lostLifeCool > 0.65 and isLoseLife and stats.life < 1 then
         player.lostLifeCool = player.lostLifeCool + dt
     end
 
-    if player.lostLifeCool > 1 and isLoseLife and stats.life > 0 then
+    if player.lostLifeCool > 0.85 and isLoseLife and stats.life > 0 then
         isLoseLife = false
         player.dead = false
         player.lostLifeCool = 0
         stats.life = stats.life - 1
     end
 
-    if player.lostLifeCool > 0.75 and isLoseLife and stats.life < 1 then
+    if player.lostLifeCool > 0.5 and isLoseLife and stats.life < 1 then
         isLoseLife = false
         player.lostLifeCool = 0
         isContinue = true

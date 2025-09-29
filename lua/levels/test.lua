@@ -7,7 +7,7 @@ local wl = wall
 local enemies = {
     wl:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500),
     wl:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100),
-    wl:new(gWidth / 4 + 20, 220, 40, 50, 50, 100),
+    wl:new(gWidth / 4 + 20, 220, 40, 50, 50, 500),
     wl:new(gWidth / 2 + 20, 220, 40, 50, 50, 100)
 }
 
@@ -17,7 +17,7 @@ function loadTestEnemies()
     enemies = {
         wl:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500),
         wl:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100),
-        wl:new(gWidth / 4 + 20, 220, 40, 50, 50, 100),
+        wl:new(gWidth / 4 + 20, 220, 40, 50, 50, 500),
         wl:new(gWidth / 2 + 20, 220, 40, 50, 50, 100)
     }   
 end
