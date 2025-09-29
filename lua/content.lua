@@ -35,14 +35,4 @@ function gameLoop(dt)
     if isFail then
         goFunc(dt)
     end
-
-    if love.keyboard.isDown("q") then
-        stats.combo = stats.combo + 1
-        comboTime = 0
-    end
-
-    if love.keyboard.isDown("a") then
-        stats.combo = 0
-        comboTime = 0
-    end
 end

@@ -48,6 +48,9 @@ player = {
     vy = 200,
     cDown = 0,
 
+    --TODO: Add invincible cooldown on player respawn
+    invis = false,
+    iCool = 0,
     dead = false
 }
 

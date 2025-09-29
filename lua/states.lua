@@ -1,3 +1,4 @@
+require("lua.levels.test")
 function states()
     if state == "game" then
         borderS()
@@ -63,5 +64,9 @@ function keyFunc(key)
 
     if key == "b" then
         isContinue = true
+    end
+
+    if key == "r" then
+        loadTestEnemies()
     end
 end
