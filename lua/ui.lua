@@ -132,7 +132,7 @@ end
 local tmr = 0
 function goFunc(dt)
     tmr = tmr + dt
-    if tmr > 0.5 then
+    if tmr > 0.75 then
         goText[4] = 1
     end
 
@@ -142,7 +142,7 @@ function goFunc(dt)
         end
     end
 
-    --TODO: tempoary, replace with changing scene to title
+    --TODO: temporary, replace with changing scene to title
     if tmr > 6.5 then
         love.event.quit(0)
     end
