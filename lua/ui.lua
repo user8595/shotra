@@ -16,7 +16,7 @@ function hud()
     love.graphics.print({gray, "LIVES\n", white, "x" .. stats.life}, monogram, 495, gHeight - 60)
     love.graphics.print({gray, "BOMB\n", white, "x" .. stats.bomb}, monogram, 495, gHeight - 100)
     love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
-    
+
     if stats.combo > 3 then
         love.graphics.setColor(white)
         love.graphics.printf({gold, "COMBO!!\n", white, "x" .. math.floor(stats.combo)}, monogram, 0, 105, gWidth / 4 - 15, "right")
@@ -117,7 +117,10 @@ function continueKey(key)
     end
 
     if key == "return" then
+        isLoseLife = false
+        player.dead = false
         stats.continues = stats.continues + 1
+        stats.life = 2
     end
 end
 

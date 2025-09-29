@@ -24,7 +24,7 @@ end
 
 -- move bullet
 function pBullet:move(dt)
-    self.y = self.y - dt * self.ySpeed
+    self.y = math.floor(self.y - dt * self.ySpeed)
 end
 
 function pBullet:collision(obj)
@@ -35,7 +35,7 @@ function pBullet:collision(obj)
 
     objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
 
-    if selfR > objL and selfL < selfR and selfB > objT and selfT < objB then
+    if selfR > objL and selfL < objR and selfB > objT and selfT < objB then
         self.dead = true
         obj.hp = obj.hp - 2
     end

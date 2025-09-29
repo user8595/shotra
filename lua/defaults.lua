@@ -41,20 +41,23 @@ player = {
     h = 24,
 
     -- hitbox
-    hW = 5,
-    hH = 5,
-
     vx = 200,
     vy = 200,
     cDown = 0,
-
+    
     --TODO: Add invincible cooldown on player respawn
     invis = false,
     iCool = 0,
-    dead = false
+    dead = false,
+    lostLifeCool = 0
 }
-
--- left side
+hitbox = {
+    x = player.x + 8,
+    y = player.y + 8,
+    w = 5,
+    h = 5,
+}
+-- player bullets
 pBlList_1, pBlList_2, pBlList_3 = {}, {}, {}
 
 -- game display
@@ -109,3 +112,5 @@ white = {1, 1, 1, 1}
 gray = {0.5, 0.5, 0.5, 1}
 gold = {1, 1, 0, 1}
 goText = {1, 1, 1, 0}
+
+playerColour = {1, 1, 1, 1}
