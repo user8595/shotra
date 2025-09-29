@@ -29,7 +29,9 @@ function TestLvLoad()
     for i, v in ipairs(enemies) do
         v:draw()
         v:despawn()
-        love.graphics.print(v.hp)
+
+        love.graphics.setColor(1,1,1)
+        love.graphics.printf("HP: ".. v.hp, monogram, 0, 20, gWidth, "center")
         
         if v.dead then
             table.remove(enemies, i)
