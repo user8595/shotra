@@ -1,16 +1,48 @@
 function states()
     if state == "game" then
+        borderS()
         hud()
         screen()
         gameDisplay()
     else
     end
-    
+
+    if isPaused then
+        pauseScreen()
+    else
+    end
+
+    if isPaused == false and isPauseDelay then
+        pauseCooldown()
+    end
+
+    if isContinue then
+        continueScreen()
+    else
+    end
+
+    if isFail then
+        gameOverText()
+    else
+    end
 end
 
 function keyFunc(key)
-    if key == "escape" then
+    if key == "escape" and isPaused or key == "escape" and isFail then
         love.event.quit(0)
+    end
+
+    if key == keys.pause[1] or key == keys.pause[2] then
+        if isPaused == false and isFail == false and isPauseDelay == false and isContinue == false then
+            isPaused = true
+            isPauseDelay = true
+        else
+            isPaused = false
+        end
+    end
+
+    if isContinue then
+        continueKey(key)
     end
     
     if key == "f11" then
@@ -28,10 +60,33 @@ function keyFunc(key)
             isDebug = false
         end
     end
+
+    if key == "b" then
+        isContinue = true
+    end
 end
 
 function gameLoop(dt)
-    if state == "game" and isPaused == false then
+    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
+        playerControl(dt)
+        statsFunc(dt)
+    end
+
+    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false then
         playerFunc(dt)
+    else
+    end
+
+    if isPaused == false and isPauseDelay then
+        pauseAnim(dt)
+    end
+
+    if isContinue then
+        continueFunc(dt)
+    else
+    end
+
+    if isFail then
+        goFunc(dt)
     end
 end

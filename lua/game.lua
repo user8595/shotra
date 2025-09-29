@@ -10,18 +10,15 @@ function gameDisplay()
 
     if isShoot then
         -- shoots bullets with cooldown
-        if player.cDown > 0.07 then
-            if stats.pLevel == 1 then
+        if stats.pTier == 1 then
+            if player.cDown > 0.12 then
                 table.insert(pBlList_1, pBl:new(player.x, player.y - 15, 5, 10, 700))
                 table.insert(pBlList_2, pBl:new(player.x + 10, player.y - 25, 5, 10, 700))
                 table.insert(pBlList_3, pBl:new(player.x + 20, player.y - 15, 5, 10, 700))
-            elseif stats.pLevel == 2 then
-            elseif stats.pLevel == 3 then
+                player.cDown = 0
             end
-            player.cDown = 0
-            -- print(pBlList_1)
-            -- print(pBlList_2)
-            -- print(pBlList_3)
+        elseif stats.pTier == 2 then
+        elseif stats.pTier == 3 then
         end
     else
     end
@@ -57,7 +54,7 @@ function gameDisplay()
     end
 end
 
-function playerFunc(dt)
+function playerControl(dt)
     if love.keyboard.isDown(keys.up) then
         player.y = player.y - dt * player.vy
     end
@@ -76,22 +73,24 @@ function playerFunc(dt)
     else
         isShoot = false
     end
-
+    
     --TODO: FInish bomb functionality
     if love.keyboard.isDown(keys.bomb) then
         
     end
-
+    
     if love.keyboard.isDown(keys.slow) then
         player.vx, player.vy = 110, 110
     else
         player.vx, player.vy = 200, 200
     end
-
+    
     if isShoot then
         player.cDown = player.cDown + dt
     end
-    
+end
+
+function playerFunc(dt)    
     -- left side
     for i, v in ipairs(pBlList_1) do
         v:move(dt)
@@ -119,5 +118,17 @@ function playerFunc(dt)
     end
     if player.y < 0 then
         player.y = 0
+    end
+end
+
+function statsFunc(dt)
+    if stats.score > stats.hScore then
+        stats.hScore = stats.score
+    end
+
+    if stats.life < 0 then
+        isFail = true
+    else
+        isFail = false
     end
 end

@@ -4,6 +4,7 @@ gWidth, gHeight = 640, 480
 
 -- fonts
 monogram = love.graphics.newFont("assets/monogram.ttf", 24)
+monogramL = love.graphics.newFont("assets/monogram.ttf", 32)
 picopixel = love.graphics.newFont("assets/Picopixel.ttf", 14)
 
 -- general
@@ -15,12 +16,19 @@ isPaused = false
 -- gameplay cooldowns
 isLoseLife = false
 isUseBomb = false
+isPauseDelay = false
 
 -- game
 isShoot = false
 --TODO: Add auto fire toggle
 isAutoFire = false
 isBoss = false
+
+-- fail screens
+isContinue = false
+isFail = false
+
+isTrnsition = false
 
 -- player
 player = {
@@ -36,6 +44,8 @@ player = {
     vx = 200,
     vy = 200,
     cDown = 0,
+
+    dead = false
 }
 
 -- left side
@@ -55,13 +65,17 @@ stats = {
     score = 0,
     hScore = 0,
     life = 2,
+    
     combo = 0,
-    pLevel = 1,
+    enemies = 0,
+    continues = 0,
+
+    pTier = 1,
     bomb = 3,
 }
 
--- current game level
-level = 1
+-- current game stage
+stage = 1
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 
@@ -77,9 +91,13 @@ keys = {
     shoot = "z",
     slow = "x",
     bomb = "c",
+    pause = {"p", "escape"}
 }
 
 -- colours
 bgCol = {0.05, 0.05, 0.05}
+borderColour = {0, 0, 0}
+popupOverlay = {0, 0, 0, 0.65}
 white = {1, 1, 1, 1}
 gray = {0.5, 0.5, 0.5, 1}
+goText = {1, 1, 1, 0}
