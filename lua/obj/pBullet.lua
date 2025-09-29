@@ -1,4 +1,3 @@
---TODO: Add collisions to enemy
 -- player bullet
 local pBullet = {
     x = x,
@@ -26,6 +25,20 @@ end
 -- move bullet
 function pBullet:move(dt)
     self.y = self.y - dt * self.ySpeed
+end
+
+function pBullet:collision(obj)
+    selfL = self.x
+    selfR = self.x + self.w
+    selfT = self.y
+    selfB = self.y + self.h
+
+    objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
+
+    if selfR > objL and selfL < selfR and selfB > objT and selfT < objB then
+        self.dead = true
+        obj.hp = obj.hp - 2
+    end
 end
 
 -- remove bullet when offscreen

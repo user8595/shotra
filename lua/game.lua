@@ -1,3 +1,5 @@
+require("lua.levels.test")
+
 local pBullet = require("lua.obj.pBullet")
 local pBl = pBullet
 
@@ -51,6 +53,11 @@ function gameDisplay()
         if v.dead then
             table.remove(pBlList_3, i)
         end
+    end
+
+    -- stage loading
+    if stage == "TEST" then
+        TestLvLoad()
     end
 end
 

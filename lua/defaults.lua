@@ -79,7 +79,7 @@ stats = {
 }
 
 -- current game stage
-stage = 1
+stage = "TEST"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 
