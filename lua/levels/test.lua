@@ -51,13 +51,6 @@ function TestLvLoad()
         love.graphics.setColor(1,1,1)
         --TODO: Replace with progressbar
         love.graphics.printf("HP: ".. v.hp, monogram, 0, 20 * i, gWidth, "center")
-
-        if v.dead then
-            table.remove(enemies, i)
-            stats.combo = stats.combo + 1
-            stats.score = stats.score + v.score * stats.combo
-            comboTime = 0
-        end
     end
 end
 
@@ -65,5 +58,13 @@ end
 function TestLvUpdate()
     for i, v in ipairs(enemies) do
         playerCol(v)
+        
+        if v.dead then
+            table.remove(enemies, i)
+            stats.combo = stats.combo + 1
+            stats.score = stats.score + v.score * stats.combo
+            stats.enemies = stats.enemies + 1
+            comboTime = 0
+        end
     end
 end

@@ -208,7 +208,7 @@ function comboCooldown(dt)
     if stats.combo > 0 then
         comboTime = comboTime + dt
     end
-    if comboTime > 1.5 then
+    if comboTime > 2 then
         stats.combo = 0
         comboTime = 0
     end
