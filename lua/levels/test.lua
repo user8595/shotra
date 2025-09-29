@@ -24,30 +24,13 @@ end
 
 -- load level contents
 function TestLvLoad()
-    --TODO: Add particles when hit enemy
-    for i, v in ipairs(pBlList_1) do
-        for j, enemy in ipairs(enemies) do
-            v:collision(enemy)
-        end
-    end
-    
-    for i, v in ipairs(pBlList_2) do
-        for j, enemy in ipairs(enemies) do
-            v:collision(enemy)
-        end
-    end
-    
-    for i, v in ipairs(pBlList_3) do
-        for j, enemy in ipairs(enemies) do
-            v:collision(enemy)
-        end
-    end
+    --TODO: Add particles when hit enemy (v:collision(enemies))
     
     -- enemy draw & dead function
     for i, v in ipairs(enemies) do
         v:draw()
         v:despawn()
-
+        
         love.graphics.setColor(1,1,1)
         --TODO: Replace with progressbar
         love.graphics.printf("HP: ".. v.hp, monogram, 0, 20 * i, gWidth, "center")
@@ -65,6 +48,25 @@ function TestLvUpdate()
             stats.score = stats.score + v.score * stats.combo
             stats.enemies = stats.enemies + 1
             comboTime = 0
+        end
+    end
+    
+    -- player bullet collision
+    for i, v in ipairs(pBlList_1) do
+        for j, enemy in ipairs(enemies) do
+            v:collision(enemy)
+        end
+    end
+    
+    for i, v in ipairs(pBlList_2) do
+        for j, enemy in ipairs(enemies) do
+            v:collision(enemy)
+        end
+    end
+    
+    for i, v in ipairs(pBlList_3) do
+        for j, enemy in ipairs(enemies) do
+            v:collision(enemy)
         end
     end
 end

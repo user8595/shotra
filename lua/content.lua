@@ -17,14 +17,14 @@ function gameLoop(dt)
         if stage == "TEST" then
             TestLvUpdate()
         end
-
+        
         -- stats and combo cooldown functionality
         statsFunc()
         comboCooldown(dt)
     end
     
     -- player movement
-    if player.dead == false and isLoseLife == false and isContinue == false and isFail == false then
+    if player.dead == false and isLoseLife == false and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
         playerControl(dt)
     else
     end
