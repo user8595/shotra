@@ -119,6 +119,7 @@ function continueKey(key)
     if key == "return" then
         isLoseLife = false
         player.dead = false
+        player.invis = true
         stats.continues = stats.continues + 1
         stats.life = 2
     end

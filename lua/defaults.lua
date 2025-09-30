@@ -45,7 +45,6 @@ player = {
     vy = 200,
     cDown = 0,
     
-    --TODO: Add invincible cooldown on player respawn
     invis = false,
     iCool = 0,
     dead = false,
@@ -85,7 +84,7 @@ stats = {
 }
 
 -- current game stage
-stage = "TEST"
+stage = "TEST_2"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 

@@ -1,4 +1,5 @@
 require("lua.levels.test")
+require("lua.levels.test_2")
 
 function gameContent()
     love.graphics.push()
@@ -13,27 +14,33 @@ function gameContent()
 end
 
 function gameLoop(dt)
-    if state == "game" and isPaused == false and isPauseDelay == false then
+    -- game states
+    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false then
         if stage == "TEST" then
             TestLvUpdate()
+        elseif stage == "TEST_2" then
+            Test_2LvUpdate(dt)
         end
         
         -- stats and combo cooldown functionality
         statsFunc()
         comboCooldown(dt)
+        playerInvis(dt)
     end
     
     -- player movement
-    if player.dead == false and isLoseLife == false and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
+    if state == "game" and player.dead == false and isLoseLife == false and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
         playerControl(dt)
     else
     end
 
     -- player fail & respawn
-    playerFail(dt)
+    if state == "game" then
+        playerFail(dt)
+    end
 
     -- player functionality and combo anim
-    if state == "game" and isPaused == false and isPauseDelay == false then
+    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
         playerFunc(dt)
         comboHudAnim(dt)
     else

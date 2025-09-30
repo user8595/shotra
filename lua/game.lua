@@ -1,7 +1,6 @@
 require("lua.levels.test")
 
 local pBullet = require("lua.obj.pBullet")
-local pBl = pBullet
 
 local function playerPosReset()
     player.x, player.y = gWidth / 2 - 12, gHeight - 60
@@ -20,9 +19,9 @@ function gameDisplay()
         -- shoots bullets with cooldown
         if stats.pTier == 1 then
             if player.cDown > 0.12 then
-                table.insert(pBlList_1, pBl:new(player.x, player.y - 15, 5, 10, 700))
-                table.insert(pBlList_2, pBl:new(player.x + 10, player.y - 25, 5, 10, 700))
-                table.insert(pBlList_3, pBl:new(player.x + 20, player.y - 15, 5, 10, 700))
+                table.insert(pBlList_1, pBullet:new(player.x, player.y - 15, 5, 10, 700))
+                table.insert(pBlList_2, pBullet:new(player.x + 10, player.y - 25, 5, 10, 700))
+                table.insert(pBlList_3, pBullet:new(player.x + 20, player.y - 15, 5, 10, 700))
                 player.cDown = 0
             end
         elseif stats.pTier == 2 then
@@ -64,6 +63,8 @@ function gameDisplay()
     -- stage loading
     if stage == "TEST" then
         TestLvLoad()
+    elseif stage == "TEST_2" then
+        Test_2LvLoad()
     end
 end
 
@@ -134,7 +135,7 @@ function playerFunc(dt)
         hitbox.x = gameWorld.x + gameWorld.w - player.w + 8
     end
 
-    -- ignore collision if dead
+    -- ignore collision if dead (for death anim?)
     if isLoseLife == false then
         if player.y > gHeight - player.h then
             player.y = gHeight - player.h
@@ -155,7 +156,7 @@ function playerFail(dt)
     if player.dead then
         playerColour[4] = 0
         playerPosReset()
-    else
+    elseif player.dead and player.invis == false then
         playerColour[4] = 1
     end
     
@@ -172,6 +173,7 @@ function playerFail(dt)
     if player.lostLifeCool > 0.85 and isLoseLife and stats.life > 0 then
         isLoseLife = false
         player.dead = false
+        player.invis = true
         player.lostLifeCool = 0
         stats.life = stats.life - 1
     end
@@ -180,6 +182,36 @@ function playerFail(dt)
         isLoseLife = false
         player.lostLifeCool = 0
         isContinue = true
+    end
+end
+
+local pIframe = 0
+function playerInvis(dt)
+    if player.invis then
+        player.iCool = player.iCool + dt
+
+        -- show invincible frames for player
+        if player.iCool > 0 then
+            pIframe = pIframe + dt
+        end
+
+        -- player iframes function
+        if pIframe > 0 then
+            playerColour[4] = 0.75
+        end
+        if pIframe > 0.05 then
+            playerColour[4] = 0.9
+        end
+        if pIframe > 0.1 then
+            pIframe = 0
+        end
+
+        if player.iCool > 3 then
+            player.invis = false
+            player.iCool = 0
+            playerColour[4] = 1
+        end
+    else
     end
 end
 

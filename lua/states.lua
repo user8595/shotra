@@ -1,4 +1,6 @@
 require("lua.levels.test")
+require("lua.levels.test_2")
+
 function states()
     if state == "game" then
         borderS()
@@ -66,7 +68,9 @@ function keyFunc(key)
         isContinue = true
     end
 
-    if key == "r" then
-        loadTestEnemies()
+    if stage == "TEST" then
+        resetTest(key)
+    elseif stage == "TEST_2" then
+        resetTest_2(key)
     end
 end
