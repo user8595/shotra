@@ -1,5 +1,5 @@
 -- player bullet
-local pBullet = {
+local Bullet = {
     x = x,
     y = y,
     w = w,
@@ -9,7 +9,7 @@ local pBullet = {
 }
 
 -- new object
-function pBullet:new(x, y, w, h, ySpeed)
+function Bullet:new(x, y, w, h, ySpeed)
     local bl = {
         x = x,
         y = y,
@@ -23,11 +23,11 @@ function pBullet:new(x, y, w, h, ySpeed)
 end
 
 -- move bullet
-function pBullet:move(dt)
+function Bullet:move(dt)
     self.y = math.floor(self.y - dt * self.ySpeed)
 end
 
-function pBullet:collision(obj)
+function Bullet:collision(obj)
     selfL = self.x
     selfR = self.x + self.w
     selfT = self.y
@@ -42,17 +42,20 @@ function pBullet:collision(obj)
 end
 
 -- remove bullet when offscreen
-function pBullet:despawn()
+function Bullet:despawn()
     if self.y < -50 then
+        self.dead = true
+    end
+    if self.y > gHeight + 50 then
         self.dead = true
     end
 end
 
 -- player shoot function
-function pBullet:draw()
+function Bullet:draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 end
 
 -- return table values
-return pBullet
+return Bullet

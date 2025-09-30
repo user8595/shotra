@@ -1,6 +1,4 @@
-require("lua.levels.test")
-
-local pBullet = require("lua.obj.pBullet")
+local Bullet = require("lua.obj.bullet")
 
 local function playerPosReset()
     player.x, player.y = gWidth / 2 - 12, gHeight - 60
@@ -19,9 +17,9 @@ function gameDisplay()
         -- shoots bullets with cooldown
         if stats.pTier == 1 then
             if player.cDown > 0.12 then
-                table.insert(pBlList_1, pBullet:new(player.x, player.y - 15, 5, 10, 700))
-                table.insert(pBlList_2, pBullet:new(player.x + 10, player.y - 25, 5, 10, 700))
-                table.insert(pBlList_3, pBullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+                table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
+                table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
+                table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
                 player.cDown = 0
             end
         elseif stats.pTier == 2 then
@@ -65,6 +63,8 @@ function gameDisplay()
         TestLvLoad()
     elseif stage == "TEST_2" then
         Test_2LvLoad()
+    elseif stage == "TEST_3" then
+        Test_3LvLoad()
     end
 end
 
@@ -163,6 +163,7 @@ function playerFail(dt)
     -- player lost cooldown before respawn
     if player.lostLifeCool < 0.85 and isLoseLife then
         player.lostLifeCool = player.lostLifeCool + dt
+        stats.combo = 0
     end
     
     -- cooldown runs quicker when lifes are empty
@@ -185,6 +186,7 @@ function playerFail(dt)
     end
 end
 
+-- player invinciblility
 local pIframe = 0
 function playerInvis(dt)
     if player.invis then
@@ -197,16 +199,16 @@ function playerInvis(dt)
 
         -- player iframes function
         if pIframe > 0 then
-            playerColour[4] = 0.75
+            playerColour[4] = 0.5
         end
         if pIframe > 0.05 then
-            playerColour[4] = 0.9
+            playerColour[4] = 0.75
         end
         if pIframe > 0.1 then
             pIframe = 0
         end
 
-        if player.iCool > 3 then
+        if player.iCool > 4 then
             player.invis = false
             player.iCool = 0
             playerColour[4] = 1
@@ -221,6 +223,7 @@ function playerCol(obj)
     local objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
     
     if hR > objL and hL < objR and hB > objT and hT < objB then
+        obj.hp = obj.hp - 2
         player.dead = true
         isLoseLife = true
     end
@@ -234,6 +237,11 @@ function statsFunc()
     if stats.combo > stats.mCombo then
         stats.mCombo = stats.combo
     end
+end
+
+-- score function
+function scoreFormula(v)
+    stats.score = stats.score + (v.score * stats.combo)
 end
 
 function comboCooldown(dt)

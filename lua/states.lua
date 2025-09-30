@@ -1,6 +1,3 @@
-require("lua.levels.test")
-require("lua.levels.test_2")
-
 function states()
     if state == "game" then
         borderS()
@@ -64,13 +61,12 @@ function keyFunc(key)
         end
     end
 
-    if key == "b" then
-        isContinue = true
-    end
-
+    -- test reset keys
     if stage == "TEST" then
         resetTest(key)
     elseif stage == "TEST_2" then
         resetTest_2(key)
+    elseif stage == "TEST_3" then
+        resetTest_3(key)
     end
 end

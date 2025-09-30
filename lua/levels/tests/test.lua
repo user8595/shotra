@@ -2,28 +2,30 @@
 local wall = require("lua.obj.wall")
 
 local enemies = {
-    wall:new(gWidth / 4, 80, 50, 50, 150, 1500),
-    wall:new(gWidth / 4 + 200, 80, 50, 50, 150, 1500),
-    wall:new(gWidth / 4 + 300, 80, 50, 50, 150, 1500),
+    wall:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500),
+    wall:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100),
+    wall:new(gWidth / 4 + 20, 220, 40, 50, 50, 500),
+    wall:new(gWidth / 2 + 20, 220, 40, 50, 50, 100)
 }
 
 -- reset enemies function
 local function loadTestEnemies()
     enemies = {
-        wall:new(gWidth / 4, 80, 50, 50, 150, 2500),
-        wall:new(gWidth / 4 + 200, 80, 50, 50, 150, 2500),
-        wall:new(gWidth / 4 + 300, 80, 50, 50, 150, 2500),
+        wall:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500),
+        wall:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100),
+        wall:new(gWidth / 4 + 20, 220, 40, 50, 50, 500),
+        wall:new(gWidth / 2 + 20, 220, 40, 50, 50, 100)
     }   
 end
 
-function resetTest_2(key)
+function resetTest(key)
     if key == "r" then
         loadTestEnemies()
     end
 end
 
 -- load level contents
-function Test_2LvLoad()
+function TestLvLoad()
     --TODO: Add particles when hit enemy (v:collision(enemies))
     
     -- enemy draw & dead function
@@ -38,20 +40,17 @@ function Test_2LvLoad()
 end
 
 -- level game loops
-function Test_2LvUpdate(dt)
+function TestLvUpdate()
     for i, v in ipairs(enemies) do
         if isFail == false and isLoseLife == false and player.invis == false then
             playerCol(v)
         else
         end
-
-        v:col()
-        v:update(dt)
         
         if v.dead then
             table.remove(enemies, i)
             stats.combo = stats.combo + 1
-            stats.score = stats.score + v.score * stats.combo
+            scoreFormula(v)
             stats.enemies = stats.enemies + 1
             comboTime = 0
         end

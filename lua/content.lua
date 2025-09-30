@@ -1,6 +1,3 @@
-require("lua.levels.test")
-require("lua.levels.test_2")
-
 function gameContent()
     love.graphics.push()
     love.graphics.translate((wWidth - gWidth) / 2, (wHeight - gHeight) / 2)
@@ -20,6 +17,8 @@ function gameLoop(dt)
             TestLvUpdate()
         elseif stage == "TEST_2" then
             Test_2LvUpdate(dt)
+        elseif stage == "TEST_3" then
+            Test_3LvUpdate(dt)
         end
         
         -- stats and combo cooldown functionality

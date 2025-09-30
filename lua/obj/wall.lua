@@ -28,7 +28,6 @@ end
 -- wall bounce update & collision
 function wall:update(dt)
     self.x, self.y = math.floor(self.x + dt * self.vx), math.floor(self.y + dt * self.vy)
-
 end
 
 function wall:col()
@@ -46,6 +45,10 @@ function wall:col()
         self.y = math.floor(0)
         self.vy = -self.vy
     end
+end
+
+function wall:back(dt)
+    self.y = math.floor(self.y + dt * self.vy)
 end
 
 function wall:despawn()

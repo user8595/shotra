@@ -45,7 +45,8 @@ player = {
     vy = 200,
     cDown = 0,
     
-    invis = false,
+    -- invincible on start of game
+    invis = true,
     iCool = 0,
     dead = false,
     lostLifeCool = 0
@@ -84,7 +85,7 @@ stats = {
 }
 
 -- current game stage
-stage = "TEST_2"
+stage = "TEST_3" -- "TEST", "TEST_2", "TEST_3"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 

@@ -33,11 +33,13 @@ function comboHudAnim(dt)
         flick1 = 0
     end
     
-    if flick1 < 0.05 then
-        gold = {0.65, 0.65, 0}
-    elseif flick1 < 0.1 then
-        gold = {1, 1, 0}
-    elseif flick1 > 0.15 then
+    if flick1 > 0 then
+        gold[1], gold[2] = 0.65, 0.65
+    end
+    if flick1 > 0.05 then
+        gold[1], gold[2] = 1, 1
+    end
+    if flick1 > 0.1 then
         flick1 = 0
     end
 end
