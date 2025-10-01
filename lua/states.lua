@@ -1,9 +1,9 @@
 function states()
     if state == "game" then
-        borderS()
-        hud()
         screen()
         gameDisplay()
+        borderS()
+        hud()
     else
     end
 

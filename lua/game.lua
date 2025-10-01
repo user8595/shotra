@@ -248,10 +248,10 @@ end
 
 --TODO: Improve code?
 function playerItem(obj)
-    local hL, hR, hT, hB = hitbox.x, hitbox.x + hitbox.w, hitbox.y, hitbox.y + hitbox.h
+    local pL, pR, pT, pB = player.x, player.x + player.w, player.y, player.y + player.h
     local objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
 
-    if hR > objL and hL < objR and hB > objT and hT < objB then
+    if pR > objL and pL < objR and pB > objT and pT < objB then
         obj.get = true
     end
 end

@@ -78,7 +78,7 @@ function TestLvUpdate(dt)
         end
     end
 
-    -- chnage text if tier > 3
+    -- chnage text if tier is 3
     if stats.pTier > 2 then
         itemScore = "500"
     else
@@ -116,7 +116,7 @@ function TestLvUpdate(dt)
         end
 
         if v.item and v.dead then
-            table.insert(items, pItem:new(v.x, v.y, 15, 7, 200))
+            table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 200))
         end
     end
     -- player bullet collision
