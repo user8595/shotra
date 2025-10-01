@@ -8,17 +8,19 @@ local wall = {
     h = h,
     hp = hp,
     score = score,
-    dead = false
+    dead = false,
+    item = item
 }
 
-function wall:new(x, y, w, h, hp, score)
+function wall:new(x, y, w, h, hp, score, item)
     local wl = {
         x = x,
         y = y,
         w = w,
         h = h,
         hp = hp,
-        score = score
+        score = score,
+        item = item
     }
     setmetatable(wl, self)
     self.__index = self

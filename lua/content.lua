@@ -14,7 +14,7 @@ function gameLoop(dt)
     -- game states
     if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false then
         if stage == "TEST" then
-            TestLvUpdate()
+            TestLvUpdate(dt)
         elseif stage == "TEST_2" then
             Test_2LvUpdate(dt)
         elseif stage == "TEST_3" then

@@ -44,6 +44,7 @@ function comboHudAnim(dt)
     end
 end
 
+--TODO: Redesign pause screen
 function pauseScreen()
     love.graphics.setColor(0, 0, 0, 0.65)
     love.graphics.rectangle("fill", 0, 0, wWidth, wHeight)
