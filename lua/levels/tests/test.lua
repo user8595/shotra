@@ -64,7 +64,10 @@ function TestLvUpdate(dt)
     for i, v in ipairs(items) do
         v:col()
         v:update(dt)
-        playerItem(v)
+        if isFail == false and isLoseLife == false then
+            playerItem(v)
+        else
+        end
 
         if v.get then
             table.remove(items, i)
