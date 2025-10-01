@@ -82,6 +82,9 @@ stats = {
 
     pTier = 1,
     bomb = 3,
+
+    --TODO: Add game timer
+    gameTime = 0,
 }
 
 -- current game stage
