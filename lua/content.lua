@@ -24,6 +24,7 @@ function gameLoop(dt)
         -- stats and combo cooldown functionality
         statsFunc()
         comboCooldown(dt)
+        playerBombCool(dt)
         playerInvis(dt)
     end
     

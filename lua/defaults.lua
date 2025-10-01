@@ -48,9 +48,11 @@ player = {
     -- invincible on start of game
     invis = true,
     iCool = 0,
+    bombCool = 0,
     dead = false,
     lostLifeCool = 0
 }
+
 hitbox = {
     x = player.x + 8,
     y = player.y + 8,
@@ -81,7 +83,7 @@ stats = {
     continues = 0,
 
     pTier = 1,
-    bomb = 3,
+    bomb = 2,
 
     --TODO: Add game timer
     gameTime = 0,
@@ -109,6 +111,7 @@ keys = {
 
 -- colours
 bgCol = {0.05, 0.05, 0.05}
+screenCol = {0.05, 0.05, 0.05}
 borderColour = {0, 0, 0}
 popupOverlay = {0, 0, 0, 0.65}
 white = {1, 1, 1, 1}

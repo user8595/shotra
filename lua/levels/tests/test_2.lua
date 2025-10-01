@@ -45,6 +45,8 @@ function Test_2LvUpdate(dt)
         else
         end
 
+        playerBomb(v)
+
         v:col()
         v:update(dt)
         

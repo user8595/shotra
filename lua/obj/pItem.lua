@@ -6,16 +6,18 @@ local powerItem = {
     vx = 75,
     vy = 75,
     score = score,
+    itype = itype,
     get = false,
 }
 
-function powerItem:new(x, y, w, h, score)
+function powerItem:new(x, y, w, h, score, itype)
     local it = {
         x = x,
         y = y,
         w = w,
         h = h,
         score = score,
+        itype = itype
     }
     setmetatable(it, self)
     self.__index = self
@@ -44,8 +46,15 @@ function powerItem:col()
 end
 
 function powerItem:draw(obj)
-    love.graphics.setColor(1, 1, 0.5)
-    love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    if self.itype == "p" then
+        love.graphics.setColor(1, 1, 0.5)
+        love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    end
+    
+    if self.itype == "b" then
+        love.graphics.setColor(1, 0.5, 0.5)
+        love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    end
 end
 
 return powerItem

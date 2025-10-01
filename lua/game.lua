@@ -12,8 +12,6 @@ function gameDisplay()
     love.graphics.setColor(playerColour)
     love.graphics.rectangle("fill", hitbox.x, hitbox.y, hitbox.w, hitbox.h)
     -- love.graphics.print(player.cDown, 40, 120)
-
-    
     -- left side
     for i, v in ipairs(pBlList_1) do
         v:draw()
@@ -82,7 +80,7 @@ function playerControl(dt)
         end
     else
     end
-    
+        
     if love.keyboard.isDown(keys.up) then
         hitbox.y = hitbox.y - dt * player.vy
         player.y = player.y - dt * player.vy
@@ -106,11 +104,6 @@ function playerControl(dt)
         isShoot = false
     end
     
-    --TODO: FInish bomb functionality
-    if love.keyboard.isDown(keys.bomb) then
-        
-    end
-    
     if love.keyboard.isDown(keys.slow) then
         player.vx, player.vy = 110, 110
     else
@@ -122,7 +115,7 @@ function playerControl(dt)
     end
 end
 
-function playerFunc(dt)    
+function playerFunc(dt)  
     -- left side
     for i, v in ipairs(pBlList_1) do
         v:move(dt)
@@ -143,12 +136,12 @@ function playerFunc(dt)
         player.x = gameWorld.x
         hitbox.x = gameWorld.x + 8
     end
-
+    
     if player.x > gameWorld.x + gameWorld.w - player.w then
         player.x = gameWorld.x + gameWorld.w - player.w
         hitbox.x = gameWorld.x + gameWorld.w - player.w + 8
     end
-
+    
     -- ignore collision if dead (for death anim?)
     if isLoseLife == false then
         if player.y > gHeight - player.h then
@@ -157,10 +150,40 @@ function playerFunc(dt)
         end
     else
     end
-
+    
     if player.y < 0 then
         player.y = 0
         hitbox.y = 8
+    end
+end
+
+function playerKey(key)
+    if key == keys.bomb and isUseBomb == false and stats.bomb > 0 and player.bombCool < 1 then
+        stats.bomb = stats.bomb - 1
+        isUseBomb = true
+    end
+end
+
+--TODO: Improve bomb animation and make bomb only affect visible game area (?)
+function playerBomb(v)
+    if isUseBomb and player.bombCool <= 1 then
+        v.hp = v.hp - 2
+    end
+end
+
+function playerBombCool(dt)
+    if player.bombCool <= 1 and isUseBomb then
+        player.bombCool = player.bombCool + dt
+    else
+        isUseBomb = false
+        player.bombCool = 0
+    end
+
+    if player.bombCool < 0.05 and isUseBomb and screenCol[1] < 0.25 and screenCol[2] < 0.25 and screenCol[3] < 0.25 then
+        screenCol[1], screenCol[2], screenCol[3] = 0.25, 0.25, 0.25
+    end
+    if player.bombCool > 0.05 and screenCol[1] > 0.05 and screenCol[2] > 0.05 and screenCol[3] > 0.05 then
+        screenCol[1], screenCol[2], screenCol[3] = screenCol[1] - dt, screenCol[2] - dt, screenCol[3] - dt
     end
 end
 
@@ -191,6 +214,7 @@ function playerFail(dt)
         player.invis = true
         player.lostLifeCool = 0
         stats.life = stats.life - 1
+        stats.bomb = 2
         stats.pTier = 1
     end
 
@@ -267,9 +291,12 @@ function statsFunc()
 end
 
 -- score function
---TODO: Readjust score formula
 function scoreFormula(v)
-    stats.score = stats.score + (v.score * stats.combo)
+    if stats.combo > 3 then
+        stats.score = stats.score + v.score + (10 * stats.combo)
+    else
+        stats.score = stats.score + v.score
+    end
 end
 
 function comboCooldown(dt)

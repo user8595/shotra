@@ -156,7 +156,7 @@ function goFunc(dt)
 end
 
 function screen()
-    love.graphics.setColor(0.05, 0.05, 0.05)
+    love.graphics.setColor(screenCol)
     love.graphics.rectangle("fill", gameWorld.x, gameWorld.y, gameWorld.w, gameWorld.h)
 end
 

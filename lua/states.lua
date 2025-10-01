@@ -41,6 +41,11 @@ function keyFunc(key)
         end
     end
 
+    -- gameplay keys
+    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
+        playerKey(key)
+    end
+
     if isContinue then
         continueKey(key)
     end

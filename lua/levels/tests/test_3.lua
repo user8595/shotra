@@ -50,6 +50,8 @@ function Test_3LvUpdate(dt)
         else
         end
 
+        playerBomb(v)
+
         v:update(dt)
         v:col()
         
