@@ -1,8 +1,16 @@
-function states()
+-- game states
+function gameStates()
     if state == "game" then
         screen()
         gameDisplay()
         LevelDraw()
+    else
+    end
+end
+
+-- menu states
+function states()
+    if state == "game" then
         borderS()
         hud()
     else
@@ -15,6 +23,7 @@ function states()
 
     if isPaused == false and isPauseDelay then
         pauseCooldown()
+    else
     end
 
     if isContinue then

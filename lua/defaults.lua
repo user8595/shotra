@@ -1,6 +1,7 @@
 -- resolution
 wWidth, wHeight = love.graphics.getWidth(), love.graphics.getHeight()
 gWidth, gHeight = 640, 480
+tX, tY = (wWidth - gWidth) / 2, (wHeight - gHeight) / 2
 
 -- fonts
 monogram = love.graphics.newFont("assets/monogram.ttf", 24)
@@ -12,6 +13,7 @@ isDebug = false
 isOptions = false
 isAbout = false
 isPaused = false
+isShake = false
 
 -- gameplay cooldowns
 isLoseLife = false
@@ -30,6 +32,8 @@ isFail = false
 
 -- combo cooldown time
 comboTime = 0
+-- screen shake timer
+shakeTimer = 0
 
 isTrnsition = false
 
@@ -98,7 +102,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST_2" -- "TEST", "TEST_2", "TEST_3"
+stage = "TEST" -- "TEST", "TEST_2", "TEST_3"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 

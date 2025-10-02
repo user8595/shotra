@@ -44,6 +44,20 @@ function gameDisplay()
     end
 end
 
+-- game screen shake effect
+function screenShake(dt)
+    if isShake then
+        shakeTimer = shakeTimer + dt
+    else
+        shakeTimer = 0
+        tX, tY = (wWidth - gWidth) / 2, (wHeight - gHeight) / 2
+    end
+    
+    if shakeTimer > 0 and isShake then
+        tX, tY = love.math.random(-2.5, 2.5), love.math.random(-2.5, 2.5)
+    end
+end
+
 function playerControl(dt)
     if isShoot then
         -- shoots bullets with cooldown
@@ -153,10 +167,10 @@ function playerKey(key)
     if key == keys.bomb and isUseBomb == false and stats.bomb > 0 and player.bombCool < 1 then
         stats.bomb = stats.bomb - 1
         isUseBomb = true
+        isShake = true
     end
 end
 
---TODO: Improve bomb animation and make bomb only affect visible game area (?)
 function playerBomb(v)
     if isUseBomb and player.bombCool <= 0.65 then
         v.hp = v.hp - 3
@@ -177,6 +191,11 @@ function playerBombCool(dt)
     if player.bombCool > 0.05 and screenCol[1] > 0.05 and screenCol[2] > 0.05 and screenCol[3] > 0.05 then
         screenCol[1], screenCol[2], screenCol[3] = screenCol[1] - dt, screenCol[2] - dt, screenCol[3] - dt
     end
+
+    -- stop screen shake effect for bomb
+    if player.bombCool > 0.07 then
+        isShake = false
+    end
 end
 
 function playerFail(dt)
@@ -193,6 +212,12 @@ function playerFail(dt)
     if player.lostLifeCool < 0.85 and isLoseLife then
         player.lostLifeCool = player.lostLifeCool + dt
         stats.combo = 0
+        isShake = true
+    end
+
+    -- stop screen shake effect
+    if player.lostLifeCool > 0.07 and isLoseLife then
+        isShake = false
     end
     
     -- cooldown runs quicker when lifes are empty
@@ -356,7 +381,6 @@ function LevelUpdate(dt)
             playerCol(v)
         else
         end
-        
 
         -- enemy bomb damage
         playerBomb(v)
