@@ -42,6 +42,32 @@ function gameDisplay()
             table.remove(pBlList_3, i)
         end
     end
+
+    if isShoot then
+        if stats.pTier == 1 then
+            if player.cDown > 0.12 then
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
+                love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
+                love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
+            end
+        elseif stats.pTier == 2 then
+            if player.cDown > 0.08 then
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
+                love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
+                love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
+            end
+        elseif stats.pTier == 3 then
+            if player.cDown > 0.05 then
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
+                love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
+                love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
+            end
+        end
+    else
+    end
 end
 
 -- game screen shake effect
@@ -52,9 +78,9 @@ function screenShake(dt)
         shakeTimer = 0
         tX, tY = (wWidth - gWidth) / 2, (wHeight - gHeight) / 2
     end
-    
+
     if shakeTimer > 0 and isShake then
-        tX, tY = love.math.random(-2.5, 2.5), love.math.random(-2.5, 2.5)
+        tX, tY = love.math.random(-4, 4), love.math.random(-4, 4)
     end
 end
 
@@ -212,6 +238,8 @@ function playerFail(dt)
     if player.lostLifeCool < 0.85 and isLoseLife then
         player.lostLifeCool = player.lostLifeCool + dt
         stats.combo = 0
+        player.cDown = 0
+        isShoot = false
         isShake = true
     end
 
@@ -445,7 +473,7 @@ function scoreFormula(v)
             scoreCombo = 10 * (stats.combo - 3)
             stats.score = stats.score + v.score + scoreCombo
         else
-            scoreCombo = 1 * (stats.combo - 3)
+            scoreCombo = 5 * (stats.combo - 3)
             stats.score = stats.score + v.score + scoreCombo
         end
     else

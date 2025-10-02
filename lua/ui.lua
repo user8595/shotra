@@ -125,6 +125,7 @@ function continueKey(key)
         player.invis = true
         stats.continues = stats.continues + 1
         stats.life = 2
+        stats.bomb = 2
     end
 end
 
