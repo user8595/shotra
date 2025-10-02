@@ -59,8 +59,12 @@ hitbox = {
     w = 5,
     h = 5,
 }
+
 -- player bullets
 pBlList_1, pBlList_2, pBlList_3 = {}, {}, {}
+
+-- level objects
+enemies, items, textEffect = {}, {}, {}
 
 -- game display
 gameWorld = {
@@ -81,7 +85,7 @@ stats = {
     mCombo = 0,
     enemies = 0,
     continues = 0,
-
+    
     pTier = 1,
     bomb = 2,
 
@@ -89,8 +93,12 @@ stats = {
     gameTime = 0,
 }
 
+scoreCombo = 0
+-- item score text effect string
+itemScore = "200"
+
 -- current game stage
-stage = "TEST" -- "TEST", "TEST_2", "TEST_3"
+stage = "TEST_2" -- "TEST", "TEST_2", "TEST_3"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 

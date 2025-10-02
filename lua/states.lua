@@ -2,6 +2,7 @@ function states()
     if state == "game" then
         screen()
         gameDisplay()
+        LevelDraw()
         borderS()
         hud()
     else

@@ -1,4 +1,5 @@
 local Bullet = require("lua.obj.bullet")
+local pItem = require("lua.obj.pItem")
 
 local function playerPosReset()
     player.x, player.y = gWidth / 2 - 12, gHeight - 60
@@ -40,15 +41,6 @@ function gameDisplay()
         if v.dead then
             table.remove(pBlList_3, i)
         end
-    end
-    
-    -- stage loading
-    if stage == "TEST" then
-        TestLvLoad()
-    elseif stage == "TEST_2" then
-        Test_2LvLoad()
-    elseif stage == "TEST_3" then
-        Test_3LvLoad()
     end
 end
 
@@ -166,8 +158,8 @@ end
 
 --TODO: Improve bomb animation and make bomb only affect visible game area (?)
 function playerBomb(v)
-    if isUseBomb and player.bombCool <= 1 then
-        v.hp = v.hp - 2
+    if isUseBomb and player.bombCool <= 0.65 then
+        v.hp = v.hp - 3
     end
 end
 
@@ -270,7 +262,7 @@ function playerCol(obj)
 
 end
 
---TODO: Improve code?
+-- player item collision
 function playerItem(obj)
     local pL, pR, pT, pB = player.x, player.x + player.w, player.y, player.y + player.h
     local objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
@@ -278,6 +270,138 @@ function playerItem(obj)
     if pR > objL and pL < objR and pB > objT and pT < objB then
         obj.get = true
     end
+end
+
+-- level objects drawing
+function LevelDraw()
+    -- items
+    for i, v in ipairs(items) do
+        v:draw()
+    end
+    
+    --TODO: Add particles when hit enemy (v:collision(enemies))
+    -- enemy draw & dead function
+    for i, v in ipairs(enemies) do
+        v:draw()
+        v:despawn()
+
+        love.graphics.setColor(1,1,1)
+        --TODO: Replace with progressbar
+        if stage == "TEST" or stage == "TEST_2" then
+            love.graphics.printf("HP: ".. v.hp, monogram, 0, 20 * i, gWidth, "center")
+        else
+        end
+    end
+
+    for i, v in ipairs(textEffect) do
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print(v[1], v[2], v[3], v[4])
+    end
+end
+
+-- level game loops
+function LevelUpdate(dt)
+    -- items
+    for i, v in ipairs(items) do
+        v:col()
+        v:update(dt)
+        if isFail == false and isLoseLife == false then
+            playerItem(v)
+        else
+        end
+
+        if v.get and v.itype == "p" then
+            table.remove(items, i)
+            table.insert(textEffect, {itemScore, monogram, v.x, v.y, true, 0})
+            if stats.pTier < 3 then
+                stats.pTier = stats.pTier + 1
+                stats.score = stats.score + v.score
+            else
+                stats.score = stats.score + v.score + 300
+            end
+        end
+
+        if v.get and v.itype == "b" then
+            table.remove(items, i)
+            table.insert(textEffect, {200, monogram, v.x, v.y, true, 0})
+            stats.bomb = stats.bomb + 1
+        end
+    end
+
+    -- change text if tier is 3
+    if stats.pTier > 2 then
+        itemScore = "500"
+    else
+        itemScore = "200"
+    end
+    
+    -- text effect
+    for i, v in ipairs(textEffect) do
+        if v[5] == true then
+            v[6] = v[6] + dt
+        end
+
+        if v[5] == false then
+            table.remove(textEffect, i)
+        end
+
+        if v[6] > 1.5 then
+            v[5] = false
+        end
+    end
+    
+    -- enemies
+    for i, v in ipairs(enemies) do
+        if isFail == false and isLoseLife == false and player.invis == false then
+            playerCol(v)
+        else
+        end
+        
+
+        -- enemy bomb damage
+        playerBomb(v)
+
+        if stage == "TEST_2" or stage == "TEST_3" then
+            v:col()
+            v:update(dt)
+        else
+        end
+
+        if v.dead then
+            table.remove(enemies, i)
+            stats.combo = stats.combo + 1
+            scoreFormula(v)
+            stats.enemies = stats.enemies + 1
+            comboTime = 0
+        end
+
+        if v.item == "p" and v.dead then
+            table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 200, "p"))
+        end
+
+        if v.item == "b" and v.dead then
+            table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 200, "b"))
+        end
+    end
+
+    -- player bullet collision
+    for i, v in ipairs(pBlList_1) do
+        for j, enemy in ipairs(enemies) do
+            v:collision(enemy)
+        end
+    end
+    
+    for i, v in ipairs(pBlList_2) do
+        for j, enemy in ipairs(enemies) do
+            v:collision(enemy)
+        end
+    end
+    
+    for i, v in ipairs(pBlList_3) do
+        for j, enemy in ipairs(enemies) do
+            v:collision(enemy)
+        end
+    end    
 end
 
 function statsFunc()
@@ -293,7 +417,13 @@ end
 -- score function
 function scoreFormula(v)
     if stats.combo > 3 then
-        stats.score = stats.score + v.score + (10 * stats.combo)
+        if isUseBomb == false then
+            scoreCombo = 10 * (stats.combo - 3)
+            stats.score = stats.score + v.score + scoreCombo
+        else
+            scoreCombo = 1 * (stats.combo - 3)
+            stats.score = stats.score + v.score + scoreCombo
+        end
     else
         stats.score = stats.score + v.score
     end
@@ -305,6 +435,7 @@ function comboCooldown(dt)
     end
     if comboTime > 2 then
         stats.combo = 0
+        scoreCombo = 0
         comboTime = 0
     end
 end
