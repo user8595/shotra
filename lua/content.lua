@@ -1,4 +1,4 @@
-function gameContent()    
+function gameContent()   
     love.graphics.push()
     love.graphics.translate(tX, tY)
     gameStates()
@@ -22,6 +22,7 @@ function gameLoop(dt)
         LevelUpdate(dt)
         -- stats and combo cooldown functionality
         statsFunc()
+        hudAnim(dt)
         comboCooldown(dt)
         playerBombCool(dt)
         playerInvis(dt)
@@ -32,12 +33,12 @@ function gameLoop(dt)
         playerControl(dt)
     else
     end
-
+    
     -- player fail & respawn
     if state == "game" then
         playerFail(dt)
     end
-
+    
     -- player functionality and combo anim
     if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
         playerFunc(dt)

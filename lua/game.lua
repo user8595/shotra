@@ -80,8 +80,16 @@ function screenShake(dt)
     end
 
     if shakeTimer > 0 and isShake then
-        tX, tY = love.math.random(-4, 4), love.math.random(-4, 4)
+        tX, tY = (wWidth - gWidth) / 2 + love.math.random(-4, 4), (wHeight - gHeight) / 2 + love.math.random(-4, 4)
     end
+end
+
+function gameInit()
+    stats.life = 2
+    stats.bomb = 2
+    stats.pTier = 1
+    stats.score = 0
+    stats.exLife = 500000
 end
 
 function playerControl(dt)
@@ -312,7 +320,6 @@ function playerCol(obj)
         player.dead = true
         isLoseLife = true
     end
-
 end
 
 -- player item collision
@@ -464,6 +471,13 @@ function statsFunc()
     if stats.combo > stats.mCombo then
         stats.mCombo = stats.combo
     end
+
+    if stats.life > 0 and stats.score >= stats.exLife then
+        stats.life = stats.life + 1
+        stats.exLife = stats.exLife + 400000
+        isExtend = true
+        Etimer = 0
+    end
 end
 
 -- score function
@@ -473,7 +487,7 @@ function scoreFormula(v)
             scoreCombo = 10 * (stats.combo - 3)
             stats.score = stats.score + v.score + scoreCombo
         else
-            scoreCombo = 5 * (stats.combo - 3)
+            scoreCombo = 7 * (stats.combo - 3)
             stats.score = stats.score + v.score + scoreCombo
         end
     else

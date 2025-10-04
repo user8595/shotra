@@ -1,5 +1,8 @@
+require("lua.strings")
+
 local prgDelay = 0
 local contTime = 10
+local lT = livesString[1]
 
 function borderS()
     love.graphics.setColor(borderColour)
@@ -7,13 +10,13 @@ function borderS()
     love.graphics.rectangle("fill", gWidth - gWidth / 4, 0, gWidth / 4, gHeight)
 end
 
-local flick1 = 0
+local flick1, flick2 = 0, 0
 function hud()
     love.graphics.setColor(white)
     love.graphics.print({gray, "HI-SCORE\n", white, string.format("%07d", stats.hScore)}, monogram, 20, 20)
     love.graphics.print({gray, "SCORE\n", white, math.floor(stats.score)}, monogram, 20, 60)
     love.graphics.print({gray, "STAGE\n", white, stage}, monogram, 20, gHeight - 60)
-    love.graphics.print({gray, "LIVES\n", white, "x" .. stats.life}, monogram, 495, gHeight - 60)
+    love.graphics.print({livesTxt, lT, white, "x" .. stats.life}, monogram, 495, gHeight - 60)
     love.graphics.print({gray, "BOMB\n", white, "x" .. stats.bomb}, monogram, 495, gHeight - 100)
     love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
 
@@ -41,6 +44,37 @@ function comboHudAnim(dt)
     end
     if flick1 > 0.1 then
         flick1 = 0
+    end
+end
+
+-- extra live text effect
+function hudAnim(dt)
+    if isExtend then
+        Etimer = Etimer + dt
+        lT = livesString[2]
+    else
+        Etimer = 0
+        lT = livesString[1]
+    end
+
+    if Etimer > 0 then
+        flick2 = flick2 + dt
+    end
+
+    if Etimer > 4 then
+        isExtend = false
+        Etimer = 0
+        flick2 = 0
+    end
+
+    if flick2 > 0 then
+        livesTxt[1], livesTxt[2], livesTxt[3] = 1, 1, 1
+    end
+    if flick2 > 0.05 then
+        livesTxt[1], livesTxt[2], livesTxt[3] = 0.5, 0.5, 0.5
+    end
+    if flick2 > 0.1 then
+        flick2 = 0
     end
 end
 
@@ -124,8 +158,7 @@ function continueKey(key)
         player.dead = false
         player.invis = true
         stats.continues = stats.continues + 1
-        stats.life = 2
-        stats.bomb = 2
+        gameInit()
     end
 end
 

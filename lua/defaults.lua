@@ -37,6 +37,10 @@ shakeTimer = 0
 
 isTrnsition = false
 
+-- extra life effect
+isExtend = false
+Etimer = 0
+
 -- player
 player = {
     x = gWidth / 2 - 12,
@@ -84,6 +88,7 @@ stats = {
     score = 0,
     hScore = 0,
     life = 2,
+    exLife = 400000,
     
     combo = 0,
     mCombo = 0,
@@ -102,7 +107,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST" -- "TEST", "TEST_2", "TEST_3"
+stage = "TEST_2" -- "TEST", "TEST_2", "TEST_3"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 
@@ -128,6 +133,7 @@ borderColour = {0, 0, 0}
 popupOverlay = {0, 0, 0, 0.65}
 white = {1, 1, 1, 1}
 gray = {0.5, 0.5, 0.5, 1}
+livesTxt = {0.5, 0.5, 0.5, 1}
 gold = {1, 1, 0, 1}
 goText = {1, 1, 1, 0}
 
