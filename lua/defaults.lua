@@ -139,6 +139,6 @@ livesTxt = {0.5, 0.5, 0.5, 1}
 gold = {1, 1, 0, 1}
 goText = {1, 1, 1, 0}
 
-lifeBarColor = {1, 0.3, 0.3, 0.75}
+lifeBarColor = {1, 0.3, 0.3, 0.5}
 
 playerColour = {1, 1, 1, 1}

@@ -45,7 +45,7 @@ function lifeBar(i, v)
     local lCurr = v.hp / v.maxHP
 
     love.graphics.setColor(lifeBarColor)
-    love.graphics.rectangle("fill", gameWorld.x + 15, gameWorld.y + 27 + 15 * (i - 1), lFull * lCurr, 2.5)
+    love.graphics.rectangle("fill", gameWorld.x + 15, gameWorld.y + 20 + 15 * (i - 1), lFull * lCurr, 2.5)
 end
 
 function comboHudAnim(dt)

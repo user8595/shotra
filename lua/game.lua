@@ -214,6 +214,7 @@ end
 function playerBombCool(dt)
     if player.bombCool <= 1 and isUseBomb then
         player.bombCool = player.bombCool + dt
+        player.invis = true
     else
         isUseBomb = false
         player.bombCool = 0
@@ -305,6 +306,12 @@ function playerInvis(dt)
             player.iCool = 0
             playerColour[4] = 1
         end
+
+        if player.iCool > 1 and isUseBomb then
+            player.invis = false
+            player.iCool = 0
+            playerColour[4] = 1
+        end
     else
     end
 end
@@ -385,14 +392,15 @@ function LevelUpdate(dt)
         
         if v.get and v.itype == "b" then
             table.remove(items, i)
-            table.insert(textEffect, {200, monogram, v.x, v.y, true, 0})
+            table.insert(textEffect, {500, monogram, v.x, v.y, true, 0})
             stats.bomb = stats.bomb + 1
+            stats.score = stats.score + 500
         end
         
         if v.get and v.itype == "s" then
             table.remove(items, i)
-            table.insert(textEffect, {500, monogram, v.x, v.y, true, 0})
-            stats.score = stats.score + 500
+            table.insert(textEffect, {200, monogram, v.x, v.y, true, 0})
+            stats.score = stats.score + 200
         end
     end
     
