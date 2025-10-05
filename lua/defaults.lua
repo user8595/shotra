@@ -72,7 +72,8 @@ hitbox = {
 pBlList_1, pBlList_2, pBlList_3 = {}, {}, {}
 
 -- level objects
-enemies, items, textEffect = {}, {}, {}
+--TODO: Add bosses?
+enemies, boss, items, textEffect = {}, {}, {}, {}
 
 -- game display
 gameWorld = {
@@ -80,7 +81,7 @@ gameWorld = {
     y = 0,
     w = gWidth / 2,
     h = gHeight,
-    scroll = 200
+    scroll = 50
 }
 
 -- stats
@@ -88,7 +89,7 @@ stats = {
     score = 0,
     hScore = 0,
     life = 2,
-    exLife = 400000,
+    exLife = 350000,
     
     combo = 0,
     mCombo = 0,
@@ -107,7 +108,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST_2" -- "TEST", "TEST_2", "TEST_3"
+stage = "TEST" -- "TEST", "TEST_2", "TEST_3"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 
@@ -136,5 +137,7 @@ gray = {0.5, 0.5, 0.5, 1}
 livesTxt = {0.5, 0.5, 0.5, 1}
 gold = {1, 1, 0, 1}
 goText = {1, 1, 1, 0}
+
+lifeBarColor = {1, 0.3, 0.3, 0.75}
 
 playerColour = {1, 1, 1, 1}

@@ -1,5 +1,5 @@
--- test enemy
-local wall = {
+-- enemy object
+local enemy = {
     x = x,
     y = y,
     vx = 200,
@@ -9,30 +9,32 @@ local wall = {
     hp = hp,
     score = score,
     dead = false,
-    item = item
+    item = item,
+    maxHP = maxHP
 }
 
-function wall:new(x, y, w, h, hp, score, item)
-    local wl = {
+function enemy:new(x, y, w, h, hp, score, item, maxHP)
+    local en = {
         x = x,
         y = y,
         w = w,
         h = h,
         hp = hp,
         score = score,
-        item = item
+        item = item,
+        maxHP = maxHP
     }
-    setmetatable(wl, self)
+    setmetatable(en, self)
     self.__index = self
-    return wl
+    return en
 end
 
--- wall bounce update & collision
-function wall:update(dt)
+-- enemy bounce update & collision
+function enemy:update(dt)
     self.x, self.y = math.floor(self.x + dt * self.vx), math.floor(self.y + dt * self.vy)
 end
 
-function wall:col()
+function enemy:col()
     sL, sR, sT, sB = self.x, self.x + self.w, self.y, self.y + self.h
     if sR > gameWorld.x + gameWorld.w then
         self.x = math.floor(gameWorld.x + gameWorld.w - self.w)
@@ -49,19 +51,19 @@ function wall:col()
     end
 end
 
-function wall:back(dt)
+function enemy:back(dt)
     self.y = math.floor(self.y + dt * self.vy)
 end
 
-function wall:despawn()
+function enemy:despawn()
     if self.hp <= 0 then
         self.dead = true
     end
 end
 
-function wall:draw()
+function enemy:draw()
     love.graphics.setColor(0.5, 0.5, 0.5)
     love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 end
 
-return wall
+return enemy

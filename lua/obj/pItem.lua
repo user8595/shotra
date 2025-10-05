@@ -25,7 +25,7 @@ function powerItem:new(x, y, w, h, score, itype)
 end
 
 function powerItem:update(dt)
-    self.x, self.y = self.x + dt * self.vx, self.y + dt * self.vy
+    self.x, self.y = math.floor(self.x + dt * self.vx), math.floor(self.y + dt * self.vy)
 end
 
 function powerItem:col()
@@ -53,6 +53,11 @@ function powerItem:draw(obj)
     
     if self.itype == "b" then
         love.graphics.setColor(1, 0.5, 0.5)
+        love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    end
+
+    if self.itype == "s" then
+        love.graphics.setColor(1, 0.5, 0)
         love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
 end

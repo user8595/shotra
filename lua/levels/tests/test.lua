@@ -1,22 +1,21 @@
---TODO: (low priority) Improve level loading (?) and make tables into global variables
 -- objects
-local wall = require("lua.obj.wall")
+local enemy = require("lua.obj.enemy")
 
 -- enemies table
 if stage == "TEST" and state == "game" then
-    table.insert(enemies, wall:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500))
-    table.insert(enemies, wall:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100, "b"))
-    table.insert(enemies, wall:new(gWidth / 4 + 20, 220, 40, 50, 50, 500, "p"))
-    table.insert(enemies, wall:new(gWidth / 2 + 20, 220, 40, 50, 50, 100, "p"))
+    table.insert(enemies, enemy:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500, "s", 50))
+    table.insert(enemies, enemy:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100, "b", 50))
+    table.insert(enemies, enemy:new(gWidth / 4 + 20, 220, 40, 50, 50, 500, "p", 50))
+    table.insert(enemies, enemy:new(gWidth / 2 + 20, 220, 40, 50, 50, 100, "p", 50))
 end
 
 -- reset enemies function
 local function loadTestEnemies()
     enemies = {}
-    table.insert(enemies, wall:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500))
-    table.insert(enemies, wall:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100, "b"))
-    table.insert(enemies, wall:new(gWidth / 4 + 20, 220, 40, 50, 50, 500, "p"))
-    table.insert(enemies, wall:new(gWidth / 2 + 20, 220, 40, 50, 50, 100, "p"))
+    table.insert(enemies, enemy:new(gWidth / 4, 80, gWidth / 2, 50, 50, 500, "s", 50))
+    table.insert(enemies, enemy:new(gWidth / 4, 150, gWidth / 2, 50, 50, 100, "b", 50))
+    table.insert(enemies, enemy:new(gWidth / 4 + 20, 220, 40, 50, 50, 500, "p", 50))
+    table.insert(enemies, enemy:new(gWidth / 2 + 20, 220, 40, 50, 50, 100, "p", 50))
 end
 
 function resetTest(key)

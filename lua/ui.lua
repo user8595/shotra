@@ -29,6 +29,14 @@ function hud()
     end
 end
 
+function lifeBar(i, v)
+    local lFull = gameWorld.w - 30
+    local lCurr = v.hp / v.maxHP
+
+    love.graphics.setColor(lifeBarColor)
+    love.graphics.rectangle("fill", gameWorld.x + 15, gameWorld.y + 27 + 15 * (i - 1), lFull * lCurr, 2.5)
+end
+
 function comboHudAnim(dt)
     if comboTime > 0 then
         flick1 = flick1 + dt

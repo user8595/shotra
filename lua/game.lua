@@ -343,19 +343,21 @@ function LevelDraw()
     -- enemy draw & dead function
     for i, v in ipairs(enemies) do
         v:draw()
-        v:despawn()
-
-        love.graphics.setColor(1,1,1)
-        --TODO: Replace with progressbar
+        
         if stage == "TEST" or stage == "TEST_2" then
-            love.graphics.printf("HP: ".. v.hp, monogram, 0, 20 * i, gWidth, "center")
+            lifeBar(i, v)
         else
         end
     end
-
+    
     for i, v in ipairs(textEffect) do
         love.graphics.setColor(1, 1, 1)
         love.graphics.print(v[1], v[2], v[3], v[4])
+    end
+    
+    --TODO: Add boss functionality
+    for i, v in ipairs(boss) do
+        v:draw()
     end
 end
 
@@ -369,7 +371,7 @@ function LevelUpdate(dt)
             playerItem(v)
         else
         end
-
+        
         if v.get and v.itype == "p" then
             table.remove(items, i)
             table.insert(textEffect, {itemScore, monogram, v.x, v.y, true, 0})
@@ -380,14 +382,20 @@ function LevelUpdate(dt)
                 stats.score = stats.score + v.score + 300
             end
         end
-
+        
         if v.get and v.itype == "b" then
             table.remove(items, i)
             table.insert(textEffect, {200, monogram, v.x, v.y, true, 0})
             stats.bomb = stats.bomb + 1
         end
+        
+        if v.get and v.itype == "s" then
+            table.remove(items, i)
+            table.insert(textEffect, {500, monogram, v.x, v.y, true, 0})
+            stats.score = stats.score + 500
+        end
     end
-
+    
     -- change text if tier is 3
     if stats.pTier > 2 then
         itemScore = "500"
@@ -400,11 +408,11 @@ function LevelUpdate(dt)
         if v[5] == true then
             v[6] = v[6] + dt
         end
-
+        
         if v[5] == false then
             table.remove(textEffect, i)
         end
-
+        
         if v[6] > 1.5 then
             v[5] = false
         end
@@ -417,15 +425,18 @@ function LevelUpdate(dt)
         else
         end
 
+        -- enemy dead function
+        v:despawn()
+        
         -- enemy bomb damage
         playerBomb(v)
-
+        
         if stage == "TEST_2" or stage == "TEST_3" then
             v:col()
             v:update(dt)
         else
         end
-
+        
         if v.dead then
             table.remove(enemies, i)
             stats.combo = stats.combo + 1
@@ -440,6 +451,31 @@ function LevelUpdate(dt)
 
         if v.item == "b" and v.dead then
             table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 200, "b"))
+        end
+
+        if v.item == "s" and v.dead then
+            table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 200, "s"))
+        end
+
+        if v.item == "" and v.dead then
+        end
+    end
+
+    --TODO: Add boss enemies
+    for i, v in ipairs(boss) do
+        if isFail == false and isLoseLife == false and player.invis == false then
+            playerCol(v)
+        else
+        end
+
+        playerBomb(v)
+
+        if v.dead then
+            table.remove(enemies, i)
+            stats.combo = stats.combo + 1
+            scoreFormula(v)
+            stats.enemies = stats.enemies + 1
+            comboTime = 0
         end
     end
 
