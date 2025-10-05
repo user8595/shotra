@@ -198,7 +198,7 @@ function playerFunc(dt)
 end
 
 function playerKey(key)
-    if key == keys.bomb and isUseBomb == false and stats.bomb > 0 and player.bombCool < 1 then
+    if key == keys.bomb and isUseBomb == false and stats.bomb > 0 and player.bombCool < 1 and isLoseLife == false then
         stats.bomb = stats.bomb - 1
         isUseBomb = true
         isShake = true
@@ -223,7 +223,7 @@ function playerBombCool(dt)
     if player.bombCool < 0.05 and isUseBomb and screenCol[1] < 0.25 and screenCol[2] < 0.25 and screenCol[3] < 0.25 then
         screenCol[1], screenCol[2], screenCol[3] = 0.25, 0.25, 0.25
     end
-    if player.bombCool > 0.05 and screenCol[1] > 0.05 and screenCol[2] > 0.05 and screenCol[3] > 0.05 then
+    if player.bombCool > 0.05 and isUseBomb and screenCol[1] > 0.05 and screenCol[2] > 0.05 and screenCol[3] > 0.05 then
         screenCol[1], screenCol[2], screenCol[3] = screenCol[1] - dt, screenCol[2] - dt, screenCol[3] - dt
     end
 
@@ -249,6 +249,7 @@ function playerFail(dt)
         stats.combo = 0
         player.cDown = 0
         isShoot = false
+        isUseBomb = false
         isShake = true
     end
 
