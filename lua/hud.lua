@@ -1,8 +1,15 @@
 require("lua.strings")
+local tween = require("lib.tween")
 
 local prgDelay = 0
 local contTime = 10
 local lT = livesString[1]
+
+local extendbg = {w=0}
+local extendT = {
+    tween.new(0.1, extendbg, {w = 100}, tween.easing.outCirc),
+    tween.new(0.15, extendbg, {w = 0}, tween.easing.outCirc)
+}
 
 function borderS()
     love.graphics.setColor(borderColour)
@@ -16,7 +23,11 @@ function hud()
     love.graphics.print({gray, "HI-SCORE\n", white, string.format("%07d", stats.hScore)}, monogram, 20, 20)
     love.graphics.print({gray, "SCORE\n", white, math.floor(stats.score)}, monogram, 20, 60)
     love.graphics.print({gray, "STAGE\n", white, stage}, monogram, 20, gHeight - 60)
+    
+    love.graphics.setColor(white)
+    love.graphics.rectangle("fill", gameWorld.x + gameWorld.w, gHeight - 60, extendbg.w, 22)
     love.graphics.print({livesTxt, lT, white, "x" .. stats.life}, monogram, 495, gHeight - 60)
+
     love.graphics.print({gray, "BOMB\n", white, "x" .. stats.bomb}, monogram, 495, gHeight - 100)
     love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
 
@@ -63,6 +74,7 @@ function hudAnim(dt)
     else
         Etimer = 0
         lT = livesString[1]
+        livesTxt[1], livesTxt[2], livesTxt[3] = 0.5, 0.5, 0.5
     end
 
     if Etimer > 0 then
@@ -75,14 +87,30 @@ function hudAnim(dt)
         flick2 = 0
     end
 
+    -- text flicker effect
     if flick2 > 0 then
-        livesTxt[1], livesTxt[2], livesTxt[3] = 1, 1, 1
+        livesTxt[1], livesTxt[2], livesTxt[3] = 0, 0, 0
     end
     if flick2 > 0.05 then
         livesTxt[1], livesTxt[2], livesTxt[3] = 0.5, 0.5, 0.5
     end
     if flick2 > 0.1 then
         flick2 = 0
+    end
+
+    -- extend bg reveal effect
+    if isExtend and extendbg.w < 100 then
+        if extendT[2].clock > 0 then
+            extendT[2].clock = 0
+        end
+        extendT[1]:set(extendT[1].clock + dt)
+    end
+
+    if isExtend == false and extendbg.w > 0 then
+        if extendT[1].clock > 0 then
+            extendT[1].clock = 0
+        end
+        extendT[2]:set(extendT[2].clock + dt)
     end
 end
 

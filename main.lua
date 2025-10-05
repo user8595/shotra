@@ -6,7 +6,7 @@ end
 -- main game
 require("lua.defaults")
 require("lua.game")
-require("lua.ui")
+require("lua.hud")
 require("lua.textures")
 require("lua.save")
 require("lua.states")

@@ -89,7 +89,7 @@ function gameInit()
     stats.bomb = 2
     stats.pTier = 1
     stats.score = 0
-    stats.exLife = 500000
+    stats.exLife = 350000
 end
 
 function playerControl(dt)
@@ -510,7 +510,7 @@ function statsFunc()
 
     if stats.life > 0 and stats.score >= stats.exLife then
         stats.life = stats.life + 1
-        stats.exLife = stats.exLife + 400000
+        stats.exLife = stats.exLife + 350000
         isExtend = true
         Etimer = 0
     end

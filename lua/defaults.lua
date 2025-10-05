@@ -108,7 +108,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST" -- "TEST", "TEST_2", "TEST_3"
+stage = "TEST_3" -- "TEST", "TEST_2", "TEST_3"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 
@@ -135,6 +135,7 @@ popupOverlay = {0, 0, 0, 0.65}
 white = {1, 1, 1, 1}
 gray = {0.5, 0.5, 0.5, 1}
 livesTxt = {0.5, 0.5, 0.5, 1}
+
 gold = {1, 1, 0, 1}
 goText = {1, 1, 1, 0}
 
