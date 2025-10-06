@@ -14,6 +14,7 @@ isOptions = false
 isAbout = false
 isPaused = false
 isShake = false
+isAutoFire = true
 
 -- gameplay cooldowns
 isLoseLife = false
@@ -22,9 +23,10 @@ isPauseDelay = false
 
 -- game
 isShoot = false
---TODO: Add auto fire toggle
-isAutoFire = false
+isWarning = false
 isBoss = false
+--TODO: Add game finish/win states
+isWin = false
 
 -- fail screens
 isContinue = false
@@ -75,6 +77,9 @@ pBlList_1, pBlList_2, pBlList_3 = {}, {}, {}
 --TODO: Add bosses?
 enemies, boss, items, textEffect = {}, {}, {}, {}
 
+-- enemy objects
+eBullet = {}
+
 -- game display
 gameWorld = {
     x = gWidth / 4,
@@ -99,7 +104,6 @@ stats = {
     pTier = 1,
     bomb = 2,
 
-    --TODO: Add game timer
     gameTime = 0,
 }
 
@@ -108,7 +112,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST_3" -- "TEST", "TEST_2", "TEST_3"
+stage = "TEST_4" -- "TEST", "TEST_2", "TEST_3", "TEST_4"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 

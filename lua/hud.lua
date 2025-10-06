@@ -1,15 +1,26 @@
 require("lua.strings")
 local tween = require("lib.tween")
 
-local prgDelay = 0
+local prgDelay = {w = 0}
 local contTime = 10
+local flick1, flick2 = 0, 0
+
 local lT = livesString[1]
 
-local extendbg = {w=0}
+local extendbg = {w = 0}
 local extendT = {
     tween.new(0.1, extendbg, {w = 100}, tween.easing.outCirc),
     tween.new(0.15, extendbg, {w = 0}, tween.easing.outCirc)
 }
+
+local pauseT = tween.new(0.8, prgDelay, {w = 160}, tween.easing.outSine)
+
+warningTime = 0
+warnTimeout = 4
+local warningTTime = 0
+local warningW = {w = 0}
+local warningColor, warningBGCol = {1, 1, 1, 0}, {0.5, 0.5, 0.5, 1}
+local warningT = tween.new(1, warningW, {w = gameWorld.w}, tween.easing.outCirc)
 
 function borderS()
     love.graphics.setColor(borderColour)
@@ -17,7 +28,6 @@ function borderS()
     love.graphics.rectangle("fill", gWidth - gWidth / 4, 0, gWidth / 4, gHeight)
 end
 
-local flick1, flick2 = 0, 0
 function hud()
     love.graphics.setColor(white)
     love.graphics.print({gray, "HI-SCORE\n", white, string.format("%07d", stats.hScore)}, monogram, 20, 20)
@@ -29,7 +39,11 @@ function hud()
     love.graphics.print({livesTxt, lT, white, "x" .. stats.life}, monogram, 495, gHeight - 60)
 
     love.graphics.print({gray, "BOMB\n", white, "x" .. stats.bomb}, monogram, 495, gHeight - 100)
-    love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
+    
+    -- show tier text when autofire is enabled
+    if isAutoFire then
+        love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
+    end
 
     if stats.combo > 3 then
         love.graphics.setColor(white)
@@ -37,6 +51,69 @@ function hud()
         love.graphics.printf({gray, "max x" .. math.floor(stats.mCombo)}, picopixel, 0, 147, gWidth / 4 - 15, "right")
     else
         love.graphics.printf({gray, "max x" .. math.floor(stats.mCombo)}, picopixel, 0, 147, gWidth / 4 - 15, "right")
+    end
+
+    love.graphics.setColor(warningBGCol)
+    love.graphics.rectangle("fill", gameWorld.x, gameWorld.y + gameWorld.h / 2 - 24, warningW.w, 32)
+
+    love.graphics.setColor(warningColor)
+    love.graphics.printf("WARNING!!", monogramL, gameWorld.x, gameWorld.y + gameWorld.h / 2 - 24, gameWorld.w, "center")
+end
+
+-- warning text on boss encounter
+function warningAnim(dt)
+    if isWarning then
+        warningTime = warningTime + dt
+        warningT:set(warningT.clock + dt)
+    else
+        -- i lost my budget
+        warningT:reset()
+        warningBGCol = {0.5, 0.5, 0.5}
+        warningColor[4] = 0
+        warningTTime = 0
+    end
+
+    if warningTime > 1 and warningTime < 1.05 then
+        warningBGCol[1], warningBGCol[2], warningBGCol[3] = 1, 1, 1
+    end
+    if warningTime > 1.1 and warningBGCol[1] > 1 then
+        warningBGCol[1] = warningBGCol[1] - dt * 5
+    end
+    if warningTime > 1.1 and warningBGCol[2] > 0.35 then
+        warningBGCol[2] = warningBGCol[2] - dt * 5
+    end
+    if warningTime > 1.1 and warningBGCol[3] > 0.35 then
+        warningBGCol[3] = warningBGCol[3] - dt * 5
+    end
+
+    if warningTime > 1.1 and warningTime < warnTimeout then
+        warningColor[4] = 1
+        warningTTime = warningTTime + dt
+    end
+
+    -- text flickering effect
+    if warningTTime > 0 then
+        warningColor[4] = 0.5
+    end
+    if warningTTime > 0.035 then
+        warningColor[4] = 1
+    end
+    if warningTTime > 0.075 then
+        warningTTime = 0
+    end
+
+    if warningTime > warnTimeout then
+        -- reset animations
+        warningT:reset()
+        warningBGCol = {0.5, 0.5, 0.5}
+        warningTTime = 0
+        if warningColor[4] > 0 then
+            warningColor[4] = warningColor[4] - dt * 10
+        end
+    end
+
+    if warningTime > warnTimeout + 0.75 then
+        isWarning = false
     end
 end
 
@@ -146,15 +223,16 @@ function pauseCooldown()
     love.graphics.rectangle("fill", 0, 0, wWidth, wHeight)
     love.graphics.setColor(white)
     love.graphics.rectangle("line", gWidth / 2 - 80, gHeight / 2 - 10, 160, 20) 
-    love.graphics.draw(whitePixel, gWidth / 2 - 80, gHeight / 2 - 10, 0, math.floor(prgDelay), 20)
+    love.graphics.draw(whitePixel, gWidth / 2 - 80, gHeight / 2 - 10, 0, math.floor(prgDelay.w), 20)
 end
 
 function pauseAnim(dt)
-    if prgDelay < 160 then
-        prgDelay = prgDelay + dt * 200
-    elseif prgDelay > 160 then
+    if isPauseDelay and prgDelay.w < 160 then
+        pauseT:set(pauseT.clock + dt)
+    elseif prgDelay.w >= 160 then
+        pauseT:reset()
+        isPaused = false
         isPauseDelay = false
-        prgDelay = 0
     end
 end
 
@@ -232,9 +310,10 @@ end
 
 function debugMenu()
     love.graphics.setColor(0.1, 0.1, 0.1)
-    love.graphics.rectangle("fill", 0, 0, 80, 45)
+    love.graphics.rectangle("fill", 0, 0, 80, 60)
     love.graphics.setColor(white)
     love.graphics.print(love.timer.getFPS() .. " FPS", picopixel, 10, 10)
     love.graphics.setColor(white)
     love.graphics.print(wWidth .. "x" .. wHeight, picopixel, 10, 25)
+    love.graphics.print(string.format("%.3f", stats.gameTime), picopixel, 10, 40)
 end

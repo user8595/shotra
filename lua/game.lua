@@ -44,22 +44,31 @@ function gameDisplay()
     end
 
     if isShoot then
-        if stats.pTier == 1 then
-            if player.cDown > 0.12 then
-                love.graphics.setColor(1, 1, 1)
-                love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
-                love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
-                love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
+        if isAutoFire then
+            if stats.pTier == 1 then
+                if player.cDown > 0.12 then
+                    love.graphics.setColor(1, 1, 1)
+                    love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
+                    love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
+                    love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
+                end
+            elseif stats.pTier == 2 then
+                if player.cDown > 0.08 then
+                    love.graphics.setColor(1, 1, 1)
+                    love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
+                    love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
+                    love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
+                end
+            elseif stats.pTier == 3 then
+                if player.cDown > 0.05 then
+                    love.graphics.setColor(1, 1, 1)
+                    love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
+                    love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
+                    love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
+                end
             end
-        elseif stats.pTier == 2 then
-            if player.cDown > 0.08 then
-                love.graphics.setColor(1, 1, 1)
-                love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
-                love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
-                love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
-            end
-        elseif stats.pTier == 3 then
-            if player.cDown > 0.05 then
+        else
+            if player.cDown < 0.12 then
                 love.graphics.setColor(1, 1, 1)
                 love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
                 love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
@@ -67,6 +76,12 @@ function gameDisplay()
             end
         end
     else
+    end
+end
+
+function enemyLoad(dt)
+    if stage == "TEST_4" then
+        enemiesTest_4(dt)
     end
 end
 
@@ -96,26 +111,33 @@ function playerControl(dt)
     if isShoot then
         -- shoots bullets with cooldown
         --TODO: Improve player tiers
-        if stats.pTier == 1 then
-            if player.cDown > 0.12 then
-                table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
-                table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
-                table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
-                player.cDown = 0
+        if isAutoFire then
+            if stats.pTier == 1 then
+                if player.cDown > 0.12 then
+                    table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
+                    table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
+                    table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+                    player.cDown = 0
+                end
+            elseif stats.pTier == 2 then
+                if player.cDown > 0.08 then
+                    table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
+                    table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
+                    table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+                    player.cDown = 0
+                end
+            elseif stats.pTier == 3 then
+                if player.cDown > 0.05 then
+                    table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
+                    table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
+                    table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+                    player.cDown = 0
+                end
             end
-        elseif stats.pTier == 2 then
-            if player.cDown > 0.08 then
-                table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
-                table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
-                table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
-                player.cDown = 0
-            end
-        elseif stats.pTier == 3 then
+        else
             if player.cDown > 0.05 then
-                table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
-                table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
-                table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
                 player.cDown = 0
+                isShoot = false
             end
         end
     else
@@ -138,10 +160,12 @@ function playerControl(dt)
         player.x = player.x + dt * player.vx
     end
     
-    if love.keyboard.isDown(keys.shoot) then
-        isShoot = true  
-    else
-        isShoot = false
+    if isAutoFire then
+        if love.keyboard.isDown(keys.shoot) then
+            isShoot = true  
+        else
+            isShoot = false
+        end
     end
     
     if love.keyboard.isDown(keys.slow) then
@@ -198,10 +222,18 @@ function playerFunc(dt)
 end
 
 function playerKey(key)
-    if key == keys.bomb and isUseBomb == false and stats.bomb > 0 and player.bombCool < 1 and isLoseLife == false then
-        stats.bomb = stats.bomb - 1
-        isUseBomb = true
-        isShake = true
+    if not isLoseLife then
+        if key == keys.shoot and not isAutoFire then
+            table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
+            table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
+            table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+            isShoot = true
+        end
+        if key == keys.bomb and not isUseBomb and stats.bomb > 0 and player.bombCool < 1 then
+            stats.bomb = stats.bomb - 1
+            isUseBomb = true
+            isShake = true
+        end
     end
 end
 
@@ -351,11 +383,6 @@ function LevelDraw()
     -- enemy draw & dead function
     for i, v in ipairs(enemies) do
         v:draw()
-        
-        if stage == "TEST" or stage == "TEST_2" then
-            lifeBar(i, v)
-        else
-        end
     end
     
     for i, v in ipairs(textEffect) do
@@ -366,11 +393,18 @@ function LevelDraw()
     --TODO: Add boss functionality
     for i, v in ipairs(boss) do
         v:draw()
+
+        -- show lifebar only on bosses
+        lifeBar(i, v)
     end
 end
 
 -- level game loops
+local next = next
 function LevelUpdate(dt)
+    -- update game time
+    stats.gameTime = stats.gameTime + dt
+
     -- items
     for i, v in ipairs(items) do
         v:col()
@@ -477,33 +511,50 @@ function LevelUpdate(dt)
         else
         end
 
+        v:despawn()
+
         playerBomb(v)
 
         if v.dead then
-            table.remove(enemies, i)
+            table.remove(boss, i)
             stats.combo = stats.combo + 1
             scoreFormula(v)
-            stats.enemies = stats.enemies + 1
             comboTime = 0
         end
     end
 
+    -- checks is bosses is empty
+    if next(boss) == nil then
+        isBoss = false
+    else
+        isBoss = true
+    end
+
     -- player bullet collision
-    for i, v in ipairs(pBlList_1) do
-        for j, enemy in ipairs(enemies) do
+    for _, v in ipairs(pBlList_1) do
+        for _, enemy in ipairs(enemies) do
             v:collision(enemy)
+        end
+        for _, b in ipairs(boss) do
+            v:collision(b)
         end
     end
     
-    for i, v in ipairs(pBlList_2) do
-        for j, enemy in ipairs(enemies) do
+    for _, v in ipairs(pBlList_2) do
+        for _, enemy in ipairs(enemies) do
             v:collision(enemy)
+        end
+        for _, b in ipairs(boss) do
+            v:collision(b)
         end
     end
     
-    for i, v in ipairs(pBlList_3) do
-        for j, enemy in ipairs(enemies) do
+    for _, v in ipairs(pBlList_3) do
+        for _, enemy in ipairs(enemies) do
             v:collision(enemy)
+        end
+        for _, b in ipairs(boss) do
+            v:collision(b)
         end
     end    
 end

@@ -83,5 +83,7 @@ function keyFunc(key)
         resetTest_2(key)
     elseif stage == "TEST_3" then
         resetTest_3(key)
+    elseif stage == "TEST_4" then
+        resetTest_4(key)
     end
 end

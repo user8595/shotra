@@ -16,6 +16,7 @@ require("lua.content")
 require("lua.levels.tests.test")
 require("lua.levels.tests.test_2")
 require("lua.levels.tests.test_3")
+require("lua.levels.tests.test_4")
 
 require("lua.levels.l_1")
 require("lua.levels.tutorial")

@@ -10,10 +10,9 @@ local enemy = {
     score = score,
     dead = false,
     item = item,
-    maxHP = maxHP
 }
 
-function enemy:new(x, y, w, h, hp, score, item, maxHP)
+function enemy:new(x, y, w, h, hp, score, item)
     local en = {
         x = x,
         y = y,
@@ -22,7 +21,6 @@ function enemy:new(x, y, w, h, hp, score, item, maxHP)
         hp = hp,
         score = score,
         item = item,
-        maxHP = maxHP
     }
     setmetatable(en, self)
     self.__index = self

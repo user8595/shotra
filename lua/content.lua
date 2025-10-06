@@ -24,8 +24,11 @@ function gameLoop(dt)
         statsFunc()
         hudAnim(dt)
         comboCooldown(dt)
+        warningAnim(dt)
         playerBombCool(dt)
         playerInvis(dt)
+
+        enemyLoad(dt)
     end
     
     -- player movement
