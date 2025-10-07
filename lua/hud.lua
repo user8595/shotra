@@ -30,7 +30,7 @@ end
 
 function hud()
     love.graphics.setColor(white)
-    love.graphics.print({gray, "HI-SCORE\n", white, string.format("%07d", stats.hScore)}, monogram, 20, 20)
+    love.graphics.print({gray, "HI-SCORE\n", white, string.format("%08d", stats.hScore)}, monogram, 20, 20)
     love.graphics.print({gray, "SCORE\n", white, math.floor(stats.score)}, monogram, 20, 60)
     love.graphics.print({gray, "STAGE\n", white, stage}, monogram, 20, gHeight - 60)
     
@@ -41,9 +41,7 @@ function hud()
     love.graphics.print({gray, "BOMB\n", white, "x" .. stats.bomb}, monogram, 495, gHeight - 100)
     
     -- show tier text when autofire is enabled
-    if isAutoFire then
-        love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
-    end
+    love.graphics.print({gray, "TIER\n", white, stats.pTier}, monogram, 495, gHeight - 140)
 
     if stats.combo > 3 then
         love.graphics.setColor(white)

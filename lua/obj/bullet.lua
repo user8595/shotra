@@ -35,10 +35,29 @@ function Bullet:collision(obj)
 
     objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
 
-    --TODO: Increase bullet damage when autofire is disabled
-    if selfR > objL and selfL < objR and selfB > objT and selfT < objB then
-        self.dead = true
-        obj.hp = obj.hp - 2
+    --TODO: Rebalance damage points?
+    if isAutoFire then
+        if selfR > objL and selfL < objR and selfB > objT and selfT < objB then
+            self.dead = true
+            obj.hp = obj.hp - 2
+        end
+    else
+        if stats.pTier == 1 then
+            if selfR > objL and selfL < objR and selfB > objT and selfT < objB then
+                self.dead = true
+                obj.hp = obj.hp - 2
+            end
+        elseif stats.pTier == 2 then
+            if selfR > objL and selfL < objR and selfB > objT and selfT < objB then
+                self.dead = true
+                obj.hp = obj.hp - 5
+            end
+        elseif stats.pTier == 3 then
+            if selfR > objL and selfL < objR and selfB > objT and selfT < objB then
+                self.dead = true
+                obj.hp = obj.hp - 8
+            end
+        end
     end
 end
 

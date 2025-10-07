@@ -96,8 +96,10 @@ function screenShake(dt)
         tX, tY = (wWidth - gWidth) / 2, (wHeight - gHeight) / 2
     end
 
-    if shakeTimer > 0 and isShake then
+    if shakeTimer > 0 and isShake and not isPaused and not isPauseDelay then
         tX, tY = (wWidth - gWidth) / 2 + love.math.random(-4, 4), (wHeight - gHeight) / 2 + love.math.random(-4, 4)
+    else
+        tX, tY = (wWidth - gWidth) / 2, (wHeight - gHeight) / 2
     end
 end
 
@@ -454,13 +456,9 @@ function LevelUpdate(dt)
         if v.get and v.itype == "p" then
             table.remove(items, i)
             table.insert(textEffect, {itemScore, monogram, v.x, v.y, true, 0})
-            if isAutoFire then
-                if stats.pTier < 3 then
-                    stats.pTier = stats.pTier + 1
-                    stats.score = stats.score + v.score
-                else
-                    stats.score = stats.score + v.score + 300
-                end
+            if stats.pTier < 3 then
+                stats.pTier = stats.pTier + 1
+                stats.score = stats.score + v.score
             else
                 stats.score = stats.score + v.score + 300
             end
@@ -481,14 +479,10 @@ function LevelUpdate(dt)
     end
     
     -- change text if tier is 3
-    if isAutoFire then
-        if stats.pTier > 2 then
-            itemScore = "500"
-        else
-            itemScore = "200"
-        end
-    else
+    if stats.pTier > 2 then
         itemScore = "500"
+    else
+        itemScore = "200"
     end
         
     -- text effect
@@ -538,9 +532,7 @@ function LevelUpdate(dt)
         end
 
         if v.item == "b" and v.dead then
-            if isAutoFire then
-                table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 500, "b"))
-            end
+            table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 500, "b"))
         end
 
         if v.item == "s" and v.dead then

@@ -1,4 +1,4 @@
-function gameContent()   
+function gameContent()
     love.graphics.push()
     love.graphics.translate(tX, tY)
     gameStates()
@@ -16,9 +16,11 @@ function gameContent()
 end
 
 function gameLoop(dt)
+    -- game shake effect
+    screenShake(dt)
+    
     -- game states
     if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false then
-        screenShake(dt)
         LevelUpdate(dt)
         -- stats and combo cooldown functionality
         statsFunc()
