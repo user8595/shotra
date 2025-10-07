@@ -107,38 +107,50 @@ function gameInit()
     stats.exLife = 350000
 end
 
+local sCool = false
 function playerControl(dt)
     if isShoot then
         -- shoots bullets with cooldown
         --TODO: Improve player tiers
         if isAutoFire then
             if stats.pTier == 1 then
-                if player.cDown > 0.12 then
+                if player.cDown > 0 and not sCool then
                     table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
                     table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
                     table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+                    sCool = true
+                end
+                if player.cDown > 0.12 then
+                    sCool = false
                     player.cDown = 0
                 end
             elseif stats.pTier == 2 then
-                if player.cDown > 0.08 then
+                if player.cDown > 0 and not sCool then
                     table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
                     table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
                     table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+                    sCool = true
+                end
+                if player.cDown > 0.08 then
                     player.cDown = 0
+                    sCool = false
                 end
             elseif stats.pTier == 3 then
-                if player.cDown > 0.05 then
+                if player.cDown > 0 and not sCool then
                     table.insert(pBlList_1, Bullet:new(player.x, player.y - 15, 5, 10, 700))
                     table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
                     table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
+                    sCool = true
+                end
+                if player.cDown > 0.05 then
                     player.cDown = 0
+                    sCool = false
                 end
             end
         else
-            if player.cDown > 0.05 then
-                player.cDown = 0
-                isShoot = false
-            end
+            sCool = false
+            isShoot = false
+            player.cDown = 0
         end
     else
     end
@@ -262,6 +274,11 @@ function playerBombCool(dt)
     -- stop screen shake effect for bomb
     if player.bombCool > 0.07 then
         isShake = false
+    end
+
+    if isLoseLife and screenCol[1] > 0.05 and screenCol[2] > 0.05 and screenCol[3] > 0.05 then
+        screenCol[1], screenCol[2], screenCol[3] = screenCol[1] - dt, screenCol[2] - dt, screenCol[3] - dt
+    else
     end
 end
 
@@ -417,9 +434,13 @@ function LevelUpdate(dt)
         if v.get and v.itype == "p" then
             table.remove(items, i)
             table.insert(textEffect, {itemScore, monogram, v.x, v.y, true, 0})
-            if stats.pTier < 3 then
-                stats.pTier = stats.pTier + 1
-                stats.score = stats.score + v.score
+            if isAutoFire then
+                if stats.pTier < 3 then
+                    stats.pTier = stats.pTier + 1
+                    stats.score = stats.score + v.score
+                else
+                    stats.score = stats.score + v.score + 300
+                end
             else
                 stats.score = stats.score + v.score + 300
             end
@@ -429,23 +450,27 @@ function LevelUpdate(dt)
             table.remove(items, i)
             table.insert(textEffect, {500, monogram, v.x, v.y, true, 0})
             stats.bomb = stats.bomb + 1
-            stats.score = stats.score + 500
+            stats.score = stats.score + v.score
         end
         
         if v.get and v.itype == "s" then
             table.remove(items, i)
             table.insert(textEffect, {200, monogram, v.x, v.y, true, 0})
-            stats.score = stats.score + 200
+            stats.score = stats.score + v.score
         end
     end
     
     -- change text if tier is 3
-    if stats.pTier > 2 then
-        itemScore = "500"
+    if isAutoFire then
+        if stats.pTier > 2 then
+            itemScore = "500"
+        else
+            itemScore = "200"
+        end
     else
-        itemScore = "200"
+        itemScore = "500"
     end
-    
+        
     -- text effect
     for i, v in ipairs(textEffect) do
         if v[5] == true then
@@ -493,7 +518,9 @@ function LevelUpdate(dt)
         end
 
         if v.item == "b" and v.dead then
-            table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 200, "b"))
+            if isAutoFire then
+                table.insert(items, pItem:new(v.x + v.w / 2, v.y + v.h / 2, 15, 7, 500, "b"))
+            end
         end
 
         if v.item == "s" and v.dead then
