@@ -71,6 +71,7 @@ function warningAnim(dt)
         warningBGCol = {0.5, 0.5, 0.5}
         warningColor[4] = 0
         warningTTime = 0
+        warningTime = 0
     end
 
     if warningTime > 1 and warningTime < 1.05 then
@@ -310,10 +311,11 @@ end
 
 function debugMenu()
     love.graphics.setColor(0.1, 0.1, 0.1)
-    love.graphics.rectangle("fill", 0, 0, 80, 60)
+    love.graphics.rectangle("fill", 0, 0, 80, 75)
     love.graphics.setColor(white)
     love.graphics.print(love.timer.getFPS() .. " FPS", picopixel, 10, 10)
     love.graphics.setColor(white)
     love.graphics.print(wWidth .. "x" .. wHeight, picopixel, 10, 25)
     love.graphics.print(string.format("%.3f", stats.gameTime), picopixel, 10, 40)
+    love.graphics.print(love.graphics.getStats().drawcalls .. "/".. love.graphics.getStats().texturememory .. " MB", picopixel, 10, 55)
 end

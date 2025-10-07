@@ -24,11 +24,11 @@ function enemiesTest_4(dt)
     end
 
     if stats.gameTime >= enSpawn and isBoss then
-        table.insert(enemies, en:new(gameWorld.x + 20, gameWorld.y + 160, 20, 20, 2, 200, "p"))
-        table.insert(enemies, en:new(gameWorld.x + gameWorld.w - 40, gameWorld.y + 160, 20, 20, 2, 200, ""))
+        table.insert(enemies, en:new(gameWorld.x + 20, gameWorld.y + 160, 20, 20, 3, 200, "p"))
+        table.insert(enemies, en:new(gameWorld.x + gameWorld.w - 40, gameWorld.y + 160, 20, 20, 3, 200, ""))
 
-        table.insert(enemies, en:new(gameWorld.x + 40, gameWorld.y + 180, 20, 20, 2, 200, ""))
-        table.insert(enemies, en:new(gameWorld.x + gameWorld.w - 80, gameWorld.y + 180, 20, 20, 2, 200, "b"))
+        table.insert(enemies, en:new(gameWorld.x + 40, gameWorld.y + 180, 20, 20, 3, 200, ""))
+        table.insert(enemies, en:new(gameWorld.x + gameWorld.w - 80, gameWorld.y + 180, 20, 20, 3, 200, "b"))
         enSpawn = enSpawn + 1
     end
 
