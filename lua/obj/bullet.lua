@@ -35,6 +35,7 @@ function Bullet:collision(obj)
 
     objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
 
+    --TODO: Increase bullet damage when autofire is disabled
     if selfR > objL and selfL < objR and selfB > objT and selfT < objB then
         self.dead = true
         obj.hp = obj.hp - 2

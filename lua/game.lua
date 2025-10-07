@@ -1,5 +1,6 @@
 local Bullet = require("lua.obj.bullet")
 local pItem = require("lua.obj.pItem")
+local pParticle = false
 
 local function playerPosReset()
     player.x, player.y = gWidth / 2 - 12, gHeight - 60
@@ -68,14 +69,15 @@ function gameDisplay()
                 end
             end
         else
-            if player.cDown < 0.12 then
-                love.graphics.setColor(1, 1, 1)
-                love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
-                love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
-                love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
-            end
         end
     else
+    end
+
+    if player.cDown > 0 and player.cDown < 0.05 and pParticle then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.rectangle("fill", player.x - 1.45, player.y - 24, 8, 8)
+        love.graphics.rectangle("fill", player.x + 8.75, player.y - 28, 8, 8)
+        love.graphics.rectangle("fill", player.x + 18.8, player.y - 24, 8, 8)
     end
 end
 
@@ -150,11 +152,26 @@ function playerControl(dt)
         else
             sCool = false
             isShoot = false
-            player.cDown = 0
         end
     else
     end
-        
+
+    if pParticle and not isAutoFire then
+        player.cDown = player.cDown + dt
+    end
+
+    if player.cDown > 0.05 and pParticle and not isAutoFire then
+        pParticle = false
+        player.cDown = 0
+    end
+    
+    --TODO: Add laser shot type when player is slowed down
+    if isSlow then
+        player.vx, player.vy = 110, 110
+    else
+        player.vx, player.vy = 200, 200
+    end
+
     if love.keyboard.isDown(keys.up) then
         hitbox.y = hitbox.y - dt * player.vy
         player.y = player.y - dt * player.vy
@@ -178,16 +195,16 @@ function playerControl(dt)
         else
             isShoot = false
         end
+
+        if isShoot then
+            player.cDown = player.cDown + dt
+        end
     end
     
     if love.keyboard.isDown(keys.slow) then
-        player.vx, player.vy = 110, 110
+        isSlow = true
     else
-        player.vx, player.vy = 200, 200
-    end
-    
-    if isShoot then
-        player.cDown = player.cDown + dt
+        isSlow = false
     end
 end
 
@@ -240,6 +257,7 @@ function playerKey(key)
             table.insert(pBlList_2, Bullet:new(player.x + 10, player.y - 25, 5, 10, 700))
             table.insert(pBlList_3, Bullet:new(player.x + 20, player.y - 15, 5, 10, 700))
             isShoot = true
+            pParticle = true
         end
         if key == keys.bomb and not isUseBomb and stats.bomb > 0 and player.bombCool < 1 then
             stats.bomb = stats.bomb - 1
@@ -298,8 +316,10 @@ function playerFail(dt)
         stats.combo = 0
         player.cDown = 0
         isShoot = false
+        sCool = false
         isUseBomb = false
         isShake = true
+        isSlow = false
     end
 
     -- stop screen shake effect

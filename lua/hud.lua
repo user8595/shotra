@@ -109,7 +109,7 @@ function warningAnim(dt)
         warningBGCol = {0.5, 0.5, 0.5}
         warningTTime = 0
         if warningColor[4] > 0 then
-            warningColor[4] = warningColor[4] - dt * 10
+            warningColor[4] = warningColor[4] - dt * 12
         end
     end
 
@@ -124,6 +124,7 @@ function lifeBar(i, v)
 
     love.graphics.setColor(lifeBarColor)
     love.graphics.rectangle("fill", gameWorld.x + 15, gameWorld.y + 20 + 15 * (i - 1), lFull * lCurr, 2.5)
+    love.graphics.print(v.hp .. "/" .. v.maxHP, picopixel, gameWorld.x + 15, gameWorld.y + 27 + 15 * (i - 1))
 end
 
 function comboHudAnim(dt)

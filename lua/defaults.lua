@@ -4,9 +4,9 @@ gWidth, gHeight = 640, 480
 tX, tY = (wWidth - gWidth) / 2, (wHeight - gHeight) / 2
 
 -- fonts
-monogram = love.graphics.newFont("assets/monogram.ttf", 24)
-monogramL = love.graphics.newFont("assets/monogram.ttf", 32)
-picopixel = love.graphics.newFont("assets/Picopixel.ttf", 14)
+monogram = love.graphics.newFont("assets/fonts/monogram.ttf", 24)
+monogramL = love.graphics.newFont("assets/fonts/monogram.ttf", 32)
+picopixel = love.graphics.newFont("assets/fonts/Picopixel.ttf", 14)
 
 -- general
 isDebug = false
@@ -23,6 +23,7 @@ isPauseDelay = false
 
 -- game
 isShoot = false
+isSlow = false
 isWarning = false
 isBoss = false
 --TODO: Add game finish/win states
@@ -112,7 +113,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST_2" -- "TEST", "TEST_2", "TEST_3", "TEST_4"
+stage = "TEST_4" -- "TEST", "TEST_2", "TEST_3", "TEST_4"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 
