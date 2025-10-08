@@ -1,5 +1,8 @@
 local Bullet = require("lua.obj.bullet")
 local pItem = require("lua.obj.pItem")
+local eBullet = require("lua.obj.eBullet")
+local table_clear = require("table.clear")
+
 local pParticle = false
 
 local function playerPosReset()
@@ -15,33 +18,18 @@ function gameDisplay()
     love.graphics.rectangle("fill", hitbox.x, hitbox.y, hitbox.w, hitbox.h)
     -- love.graphics.print(player.cDown, 40, 120)
     -- left side
-    for i, v in ipairs(pBlList_1) do
+    for _, v in ipairs(pBlList_1) do
         v:draw()
-        v:despawn()
-        
-        if v.dead then
-            table.remove(pBlList_1, i)
-        end
     end
     
     -- center
-    for i, v in ipairs(pBlList_2) do
+    for _, v in ipairs(pBlList_2) do
         v:draw()
-        v:despawn()
-        
-        if v.dead then
-            table.remove(pBlList_2, i)
-        end
     end
     
     -- right side
-    for i, v in ipairs(pBlList_3) do
+    for _, v in ipairs(pBlList_3) do
         v:draw()
-        v:despawn()
-        
-        if v.dead then
-            table.remove(pBlList_3, i)
-        end
     end
 
     if isShoot then
@@ -272,6 +260,7 @@ end
 function playerBomb(v)
     if isUseBomb and player.bombCool <= 0.65 then
         v.hp = v.hp - 3
+        table_clear(enemyBullet)
     end
 end
 
@@ -401,6 +390,17 @@ function playerCol(obj)
     end
 end
 
+function eBulletCol(obj)
+    local hL, hR, hT, hB = hitbox.x, hitbox.x + hitbox.w, hitbox.y, hitbox.y + hitbox.h
+    local objL, objR, objT, objB = obj.x, obj.x + obj.w, obj.y, obj.y + obj.h
+
+    -- player object
+    if hR > objL and hL < objR and hB > objT and hT < objB then
+        player.dead = true
+        isLoseLife = true
+    end
+end
+
 -- player item collision
 function playerItem(obj)
     local pL, pR, pT, pB = player.x, player.x + player.w, player.y, player.y + player.h
@@ -414,27 +414,30 @@ end
 -- level objects drawing
 function LevelDraw()
     -- items
-    for i, v in ipairs(items) do
+    for _, v in ipairs(items) do
         v:draw()
     end
     
-    --TODO: Add particles when hit enemy (v:collision(enemies))
+    --TODO: Add particles/effects when hit enemy (v:collision(enemies))
     -- enemy draw & dead function
-    for i, v in ipairs(enemies) do
+    for _, v in ipairs(enemies) do
         v:draw()
     end
     
-    for i, v in ipairs(textEffect) do
+    for _, v in ipairs(textEffect) do
         love.graphics.setColor(1, 1, 1)
         love.graphics.print(v[1], v[2], v[3], v[4])
     end
     
-    --TODO: Add boss functionality
     for i, v in ipairs(boss) do
         v:draw()
 
         -- show lifebar only on bosses
         lifeBar(i, v)
+    end
+
+    for _, v in ipairs(enemyBullet) do
+        v:draw()
     end
 end
 
@@ -570,7 +573,12 @@ function LevelUpdate(dt)
     end
 
     -- player bullet collision
-    for _, v in ipairs(pBlList_1) do
+    for i, v in ipairs(pBlList_1) do
+        v:despawn()
+        if v.dead then
+            table.remove(pBlList_1, i)
+        end
+
         for _, enemy in ipairs(enemies) do
             v:collision(enemy)
         end
@@ -579,7 +587,12 @@ function LevelUpdate(dt)
         end
     end
     
-    for _, v in ipairs(pBlList_2) do
+    for i, v in ipairs(pBlList_2) do
+        v:despawn()
+        if v.dead then
+            table.remove(pBlList_2, i)
+        end
+
         for _, enemy in ipairs(enemies) do
             v:collision(enemy)
         end
@@ -588,7 +601,12 @@ function LevelUpdate(dt)
         end
     end
     
-    for _, v in ipairs(pBlList_3) do
+    for i, v in ipairs(pBlList_3) do
+        v:despawn()
+        if v.dead then
+            table.remove(pBlList_3, i)
+        end
+
         for _, enemy in ipairs(enemies) do
             v:collision(enemy)
         end
@@ -596,6 +614,20 @@ function LevelUpdate(dt)
             v:collision(b)
         end
     end    
+
+    for i, v in ipairs(enemyBullet) do
+        if isFail == false and isLoseLife == false and player.invis == false then
+            eBulletCol(v)
+        else
+        end
+        
+        v:update(dt)
+        v:despawn()
+
+        if v.dead then
+            table.remove(enemyBullet, i)
+        end
+    end
 end
 
 function statsFunc()

@@ -75,11 +75,10 @@ hitbox = {
 pBlList_1, pBlList_2, pBlList_3 = {}, {}, {}
 
 -- level objects
---TODO: Add bosses?
 enemies, boss, items, textEffect = {}, {}, {}, {}
 
 -- enemy objects
-eBullet = {}
+enemyBullet = {}
 
 -- game display
 gameWorld = {
