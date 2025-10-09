@@ -24,6 +24,7 @@ function enemiesTest_4(dt)
         bossSpawned = true
     end
 
+    --TODO: Improve bullet patterns
     if stats.gameTime >= enSpawn and isBoss then
         if enSpawn % 20 == 0 then
             table.insert(enemies, en:new(gameWorld.x + gameWorld.w - 40, gameWorld.y + 160, 20, 20, 3, 200, ""))
@@ -32,8 +33,13 @@ function enemiesTest_4(dt)
             table.insert(enemies, en:new(gameWorld.x + 40, gameWorld.y + 180, 20, 20, 3, 200, ""))
             table.insert(enemies, en:new(gameWorld.x + gameWorld.w - 80, gameWorld.y + 180, 20, 20, 3, 200, "b"))
 
+            -- bullets
             table.insert(enemyBullet, eb:new(gameWorld.x + 45 + 5, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
             table.insert(enemyBullet, eb:new(gameWorld.x + 45 + 15, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
+
+            table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w / 2 - 15, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
+            table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w / 2 - 5, gameWorld.y + 215, 0, 200, 5, 15, 0, 1))
+            table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w / 2 + 5, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
 
             table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w - 45 - 5, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
             table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w - 45 - 15, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
@@ -43,9 +49,14 @@ function enemiesTest_4(dt)
     
             table.insert(enemies, en:new(gameWorld.x + 40, gameWorld.y + 180, 20, 20, 3, 200, ""))
             table.insert(enemies, en:new(gameWorld.x + gameWorld.w - 80, gameWorld.y + 180, 20, 20, 3, 200, ""))
-            
+
+            -- bullets
             table.insert(enemyBullet, eb:new(gameWorld.x + 45 + 5, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
             table.insert(enemyBullet, eb:new(gameWorld.x + 45 + 15, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
+            
+            table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w / 2 - 15, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
+            table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w / 2 - 5, gameWorld.y + 215, 0, 200, 5, 15, 0, 1))
+            table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w / 2 + 5, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
 
             table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w - 45 - 5, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
             table.insert(enemyBullet, eb:new(gameWorld.x + gameWorld.w - 45 - 15, gameWorld.y + 210, 0, 200, 5, 15, 0, 1))
