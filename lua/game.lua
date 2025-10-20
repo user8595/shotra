@@ -332,8 +332,17 @@ function playerFail(dt)
         stats.bomb = 2
         stats.pTier = 1
     end
+    
+    -- prevent pausing game when lost
+    if player.lostLifeCool > 0 and isLoseLife and stats.life < 1 then
+        isPaused = false
+        isPauseDelay = false
+    end
 
     if player.lostLifeCool > 0.5 and isLoseLife and stats.life < 1 then
+        -- pro player reflexes for this (?)
+        isPaused = false
+        isPauseDelay = false
         isLoseLife = false
         player.lostLifeCool = 0
         isContinue = true

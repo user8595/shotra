@@ -112,7 +112,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST_4" -- "TEST", "TEST_2", "TEST_3", "TEST_4"
+stage = "TEST" -- "TEST", "TEST_2", "TEST_3", "TEST_4"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 
@@ -126,8 +126,8 @@ keys = {
     left = "left",
     right = "right",
     shoot = "z",
-    slow = "x",
-    bomb = "c",
+    bomb = "x",
+    slow = "c",
     pause = {"p", "escape"}
 }
 

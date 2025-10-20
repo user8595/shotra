@@ -8,8 +8,8 @@ Still incomplete.
 
 - Arrow Keys: Move ship
 - Z: Shoot bullets
-- X: Slow down ship
-- C: Use bomb
+- X: Use bomb
+- C: Slow down ship
 
 ### License
 
