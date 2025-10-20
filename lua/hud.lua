@@ -22,6 +22,9 @@ local warningW = {w = 0}
 local warningColor, warningBGCol = {1, 1, 1, 0}, {0.5, 0.5, 0.5, 1}
 local warningT = tween.new(1, warningW, {w = gameWorld.w}, tween.easing.outCirc)
 
+-- lifebar variables
+local lFull, lCurr
+
 function borderS()
     love.graphics.setColor(borderColour)
     love.graphics.rectangle("fill", 0, 0, gWidth / 4, gHeight)
@@ -117,6 +120,10 @@ function warningAnim(dt)
 end
 
 function lifeBar(i, v)
+    -- update variables
+    lFull = gameWorld.w - 30
+    lCurr = v.hp / v.maxHP
+
     love.graphics.setColor(lifeBarColor)
     love.graphics.rectangle("fill", gameWorld.x + 15, gameWorld.y + 20 + 27 * (i - 1), lFull * lCurr, 2.5)
     love.graphics.print(v.hp .. "/" .. v.maxHP, picopixel, gameWorld.x + 15, gameWorld.y + 27 + 27 * (i - 1))

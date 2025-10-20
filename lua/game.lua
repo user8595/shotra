@@ -429,8 +429,13 @@ function LevelDraw()
     
     --TODO: Add particles/effects when hit enemy (v:collision(enemies))
     -- enemy draw & dead function
-    for _, v in ipairs(enemies) do
+    for i, v in ipairs(enemies) do
         v:draw()
+
+        -- attempt to compare with "nil"
+        if v.maxHP ~= nil then
+            lifeBar(i, v)
+        end
     end
     
     for _, v in ipairs(textEffect) do
@@ -441,7 +446,6 @@ function LevelDraw()
     for i, v in ipairs(boss) do
         v:draw()
 
-        -- show lifebar only on bosses
         lifeBar(i, v)
     end
 
@@ -564,10 +568,6 @@ function LevelUpdate(dt)
         v:despawn()
 
         playerBomb(v)
-
-        -- life bar variables
-        lFull = gameWorld.w - 30
-        lCurr = v.hp / v.maxHP
 
         if v.dead then
             table.remove(boss, i)
