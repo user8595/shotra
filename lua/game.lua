@@ -494,7 +494,7 @@ function LevelUpdate(dt)
     if stats.pTier > 2 then
         itemScore = "500"
     else
-        itemScore = "200"
+        itemScore = {{1, 0.85, 0.25}, "T+"}
     end
         
     -- text effect
@@ -555,7 +555,6 @@ function LevelUpdate(dt)
         end
     end
 
-    --TODO: Add boss enemies
     for i, v in ipairs(boss) do
         if isFail == false and isLoseLife == false and player.invis == false then
             playerCol(v)
@@ -565,6 +564,10 @@ function LevelUpdate(dt)
         v:despawn()
 
         playerBomb(v)
+
+        -- life bar variables
+        lFull = gameWorld.w - 30
+        lCurr = v.hp / v.maxHP
 
         if v.dead then
             table.remove(boss, i)

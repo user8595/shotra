@@ -117,12 +117,9 @@ function warningAnim(dt)
 end
 
 function lifeBar(i, v)
-    local lFull = gameWorld.w - 30
-    local lCurr = v.hp / v.maxHP
-
     love.graphics.setColor(lifeBarColor)
-    love.graphics.rectangle("fill", gameWorld.x + 15, gameWorld.y + 20 + 15 * (i - 1), lFull * lCurr, 2.5)
-    love.graphics.print(v.hp .. "/" .. v.maxHP, picopixel, gameWorld.x + 15, gameWorld.y + 27 + 15 * (i - 1))
+    love.graphics.rectangle("fill", gameWorld.x + 15, gameWorld.y + 20 + 27 * (i - 1), lFull * lCurr, 2.5)
+    love.graphics.print(v.hp .. "/" .. v.maxHP, picopixel, gameWorld.x + 15, gameWorld.y + 27 + 27 * (i - 1))
 end
 
 function comboHudAnim(dt)
