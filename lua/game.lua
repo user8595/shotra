@@ -69,9 +69,14 @@ function gameDisplay()
     end
 end
 
-function enemyLoad(dt)
+-- enemy update function
+function enemyUpdate(dt)
     if stage == "TEST_4" then
         enemiesTest_4(dt)
+    end
+
+    if stage == "TEST_5" then
+        enemiesTest_5(dt)
     end
 end
 
@@ -251,6 +256,10 @@ function playerKey(key)
         end
         if key == keys.bomb and not isUseBomb and stats.bomb > 0 and player.bombCool < 1 then
             stats.bomb = stats.bomb - 1
+            if player.invis and player.iCool < 2 then
+            else
+                player.iCool = 2
+            end
             isUseBomb = true
             isShake = true
         end
@@ -372,12 +381,6 @@ function playerInvis(dt)
         end
 
         if player.iCool > 4 then
-            player.invis = false
-            player.iCool = 0
-            playerColour[4] = 1
-        end
-
-        if player.iCool > 1 and isUseBomb then
             player.invis = false
             player.iCool = 0
             playerColour[4] = 1
@@ -577,7 +580,7 @@ function LevelUpdate(dt)
         end
     end
 
-    -- checks is bosses is empty
+    -- checks if bosses is empty
     if next(boss) == nil then
         isBoss = false
     else
@@ -633,7 +636,9 @@ function LevelUpdate(dt)
         else
         end
         
-        v:update(dt)
+        if stage ~= "TEST_5" then
+            v:update(dt)
+        end
         v:despawn()
 
         if v.dead then

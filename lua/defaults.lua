@@ -112,7 +112,7 @@ scoreCombo = 0
 itemScore = "200"
 
 -- current game stage
-stage = "TEST_2" -- "TEST", "TEST_2", "TEST_3", "TEST_4"
+stage = "TEST_5" -- "TEST", "TEST_2", "TEST_3", "TEST_4", "TEST_5"
 -- difficulty
 diff = "normal" -- "easy", "normal", "hard"
 

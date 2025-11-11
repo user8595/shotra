@@ -30,7 +30,7 @@ function gameLoop(dt)
         playerBombCool(dt)
         playerInvis(dt)
 
-        enemyLoad(dt)
+        enemyUpdate(dt)
     end
     
     -- player movement
@@ -45,7 +45,7 @@ function gameLoop(dt)
     end
     
     -- player functionality and combo anim
-    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false and isFail == false then
+    if state == "game" and isPaused == false and isPauseDelay == false and isContinue == false then
         playerFunc(dt)
         comboHudAnim(dt)
     else
